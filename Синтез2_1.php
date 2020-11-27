@@ -26,14 +26,14 @@
 
 $_SERVER['REQUEST_URI']='/';
 
-require_once('/home/EDRO.SetOfTools/System/0.Functions/0.strNDigit.php');
-require_once('/home/EDRO.SetOfTools/System/0.Functions/1.RequestsFilter.php');
-require_once('/home/EDRO.SetOfTools/System/1.Reporter/0.ReportError.php');
-require_once('/home/EDRO.SetOfTools/System/1.Reporter/1.Report.php');
-require_once('/home/EDRO.SetOfTools/System/2.VectorKIIM/0.KIIM.php');
-require_once('/home/EDRO.SetOfTools/System/2.VectorKIIM/1.objKIIM.activation.php');
-//require_once('/home/EDRO.SetOfTools/System/3.Buffer/0.EDRO_Loader.php');
-require_once('/home/EDRO.SetOfTools/System/3.Buffer/1.EDRO_Buffering.php');
+require_once('/home/EDRO.SOT/System/0.Functions/0.strNDigit.php');
+require_once('/home/EDRO.SOT/System/0.Functions/1.RequestsFilter.php');
+require_once('/home/EDRO.SOT/System/1.Reporter/0.ReportError.php');
+require_once('/home/EDRO.SOT/System/1.Reporter/1.Report.php');
+require_once('/home/EDRO.SOT/System/2.VectorKIIM/0.KIIM.php');
+require_once('/home/EDRO.SOT/System/2.VectorKIIM/1.objKIIM.activation.php');
+//require_once('/home/EDRO.SOT/System/3.Buffer/0.EDRO_Loader.php');
+require_once('/home/EDRO.SOT/System/3.Buffer/1.EDRO_Buffering.php');
 $сРасположОбъект	='/home/ЕДРО:ПОЛИМЕР/о2о.Синтез.ЕДРО/о2о.Если/о2о.Действие/о2о.Реальность/о2о.Объект';
 //echo '/home/ЕДРО:ПОЛИМЕР/о2о.Синтез.ЕДРО/о2о.Если/о2о.Действие/о2о.Реальность/о2о.Объект';
 //exec('mkdir -p /home/ЕДРО:ПОЛИМЕР/о2о.Синтез.ЕДРО/о2о.Если/о2о.Действие/о2о.Реальность/о2о.Объект');
@@ -95,7 +95,7 @@ class Синтез
 	private		$чТекущаяСтрока		=0;
 	private		$сИмяТекущегОбъекта	='';
 	private		$arrAndroidCodec		=array('mp3', 'mpeg', 'ogg', 'oggо30оо27оcodecsо26оopus', 'oggо30оо27оcodecsо26оvorbis');
-	private		$arrAppleCodec			=array('aac', 'aacp', 'flac', 'mp3', 'mp4', 'mpeg');
+	private		$arrAppleCodec			=array('aac', 'aacp', 'flac', 'mp3', 'mpeg');
 
 
 	public function __construct()
@@ -150,7 +150,12 @@ class Синтез
 				&&фУникальный($мОбработанныеСсылки, $оСтанцияЧист->listen_url)===TRUE
 				&&(фCreateListen_lnSock($оСтанцияЧист->listen_url)===TRUE)
 				)
+				)
 				{
+				if(фДубль($мОбработанныеСсылки, $оСтанцияЧист)===TRUE)
+					{
+					
+					}
 				$this->сТекущаяСтрока=$strLocationStationsUnordered.'/'.$this->чТекущаяСтрока.'.plmr';
 				$this->_ЗаписатьСтроку($this->чТекущаяСтрока, $strLocationStationsUnordered,  $оСтанцияЧист);
 				$this-> _ЗаписатьИтог($_сТипХранения='unordered');
