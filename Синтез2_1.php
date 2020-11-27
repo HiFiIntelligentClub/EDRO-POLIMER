@@ -26,14 +26,14 @@
 
 $_SERVER['REQUEST_URI']='/';
 
-require_once('/home/EDRO.SOT/System/0.Functions/0.strNDigit.php');
-require_once('/home/EDRO.SOT/System/0.Functions/1.RequestsFilter.php');
-require_once('/home/EDRO.SOT/System/1.Reporter/0.ReportError.php');
-require_once('/home/EDRO.SOT/System/1.Reporter/1.Report.php');
-require_once('/home/EDRO.SOT/System/2.VectorKIIM/0.KIIM.php');
-require_once('/home/EDRO.SOT/System/2.VectorKIIM/1.objKIIM.activation.php');
-//require_once('/home/EDRO.SOT/System/3.Buffer/0.EDRO_Loader.php');
-require_once('/home/EDRO.SOT/System/3.Buffer/1.EDRO_Buffering.php');
+require_once('/home/EDRO.SetOfTools/System/0.Functions/0.strNDigit.php');
+require_once('/home/EDRO.SetOfTools/System/0.Functions/1.RequestsFilter.php');
+require_once('/home/EDRO.SetOfTools/System/1.Reporter/0.ReportError.php');
+require_once('/home/EDRO.SetOfTools/System/1.Reporter/1.Report.php');
+require_once('/home/EDRO.SetOfTools/System/2.VectorKIIM/0.KIIM.php');
+require_once('/home/EDRO.SetOfTools/System/2.VectorKIIM/1.objKIIM.activation.php');
+//require_once('/home/EDRO.SetOfTools/System/3.Buffer/0.EDRO_Loader.php');
+require_once('/home/EDRO.SetOfTools/System/3.Buffer/1.EDRO_Buffering.php');
 $сРасположОбъект	='/home/ЕДРО:ПОЛИМЕР/о2о.Синтез.ЕДРО/о2о.Если/о2о.Действие/о2о.Реальность/о2о.Объект';
 //echo '/home/ЕДРО:ПОЛИМЕР/о2о.Синтез.ЕДРО/о2о.Если/о2о.Действие/о2о.Реальность/о2о.Объект';
 //exec('mkdir -p /home/ЕДРО:ПОЛИМЕР/о2о.Синтез.ЕДРО/о2о.Если/о2о.Действие/о2о.Реальность/о2о.Объект');
@@ -89,7 +89,7 @@ class Синтез
 
 	private		$сТипОперации		='Чтение_Диск';
 	private		$сГлавнаяПапка		='/home/ЕДРО:ПОЛИМЕР/о2о.БазаДанных';
-	private		$сБазаДанных		='HiFiIntelligentClub';
+	private		$сБазаДанных		='HiFiIntelligentClub2';
 	private		$сТаблица		='Stations';
 	private		$мТипХранения		=array('unordered','search');
 	private		$чТекущаяСтрока		=0;
@@ -109,7 +109,7 @@ class Синтез
 		$this->мСписокОбъектов		=$this->мПрочитатьСписокОбъектов();
 		echo 'Фаза1.3'."\n";
 		$this->_CreateStructure($this->сГлавнаяПапка.'/'.$this->сБазаДанных);
-		echo 'Фаза1.x'."\n";
+		echo 'Фаза1.='."\n";
 		}
 
 
@@ -121,6 +121,7 @@ class Синтез
 		$strLocationStationsSearch	=РасположениеСоздать::с($strBasePath.'/Stations',	'search');
 		$strLocationStationsUnordered	=РасположениеСоздать::с($strBasePath.'/Stations',	'unordered');
 		$мОбработанныеСсылки		=array();
+		$ч0Х				=0;
 		foreach($this->мСписокОбъектов as $оСтанцияЧист)
 			{
 			$оСтанцияЧист->listen_url	=сЗаменаСлэшУЕ($оСтанцияЧист->listen_url);
@@ -145,51 +146,66 @@ class Синтез
 				echo '-';
 				}
 			exit;*/
-			if((strpos($оСтанцияЧист->server_type, 'video')===FALSE)
-				&&!empty($оСтанция->listen_url)
-				&&фУникальный($мОбработанныеСсылки, $оСтанцияЧист->listen_url)===TRUE
-				&&(фCreateListen_lnSock($оСтанцияЧист->listen_url)===TRUE)
-				)
-				)
+			if(empty($оСтанция->listen_url))
 				{
-				if(фДубль($мОбработанныеСсылки, $оСтанцияЧист)===TRUE)
-					{
-					
-					}
-				$this->сТекущаяСтрока=$strLocationStationsUnordered.'/'.$this->чТекущаяСтрока.'.plmr';
-				$this->_ЗаписатьСтроку($this->чТекущаяСтрока, $strLocationStationsUnordered,  $оСтанцияЧист);
-				$this-> _ЗаписатьИтог($_сТипХранения='unordered');
-				$this->_CreateName($strLocationStationsSearch, $оСтанция->strServer_name, 'unordered');
-				//$s0=РасположениеСоздать::с($strBasePath.'/Stations',	'unordered');
-				//$this->_СоздатьСсылку($this->сТекущаяСтрока, $s0);
-				/*ALL*/
-				//echo 'All'."\n";
-				$this->_CreateTagPack($strBasePath, $arrGenre, $оСтанция, 1);
-
-				/*All HiFi*/
-				//$this->_CreateTagPack($strBasePath.'/AllHiFi', $arrGenre, $оСтанция);
-
-				/*Android*/
-				if(in_array($оСтанция->strServer_type, $this->arrAndroidCodec)!==FALSE)
-					{
-					//echo 'Android'."\n";
-					$this->_CreateTagPack($strBasePath.'/Android', $arrGenre, $оСтанция, 1);
-					}
-					/*Android HiFi*/
-				//$this->_CreateTagPack($strBasePath.'/AndroidHiFi', $arrGenre, $оСтанция);
-					/*Apple*/
-				if(in_array($оСтанция->strServer_type, $this->arrAppleCodec)!==FALSE)
-					{
-					//echo 'Apple'."\n";
-					$this->_CreateTagPack($strBasePath.'/Apple', $arrGenre, $оСтанция, 1);
-					}
-
-				/*Apple HiFi*/
-				
-				//$this->_CreateTagPack($strBasePath.'/AppleHiFi', $arrGenre, $оСтанция);
-				
-				$this->чТекущаяСтрока++;
+				_Report('empty($оСтанция->listen_url)');
+				continue;
 				}
+			if($оСтанция->listen_url=="")
+				{
+				_Report('$оСтанция->listen_url==""');
+				continue;
+				}
+			if(strpos($оСтанцияЧист->server_type, 'video')!==FALSE)
+				{
+				_Report('strpos($оСтанцияЧист->server_type, video)!==FALSE');
+				continue;
+				}
+			if(фУникальный($мОбработанныеСсылки, $оСтанцияЧист->listen_url)!==TRUE)
+				{
+				_Report('фУникальный($мОбработанныеСсылки, $оСтанцияЧист->listen_url)===TRUE');
+				continue;
+				}
+			if(фДубль($мОбработанныеСсылки, $оСтанцияЧист)===TRUE)
+				{
+				_Report('фДубль($мОбработанныеСсылки, $оСтанцияЧист)===TRUE');
+				continue;
+				}
+			if(фCreateListen_lnSock($оСтанцияЧист->listen_url)!==TRUE)
+				{
+				_Report('фCreateListen_lnSock($оСтанцияЧист->listen_url)===TRUE');
+				continue;
+				}
+			
+			$this->сТекущаяСтрока=$strLocationStationsUnordered.'/'.$this->чТекущаяСтрока.'.plmr';
+			$this->_ЗаписатьСтроку($this->чТекущаяСтрока, $strLocationStationsUnordered,  $оСтанцияЧист);
+			$this-> _ЗаписатьИтог($_сТипХранения='unordered');
+			$this->_CreateName($strLocationStationsSearch, $оСтанция->strServer_name, 'unordered');
+			//$s0=РасположениеСоздать::с($strBasePath.'/Stations',	'unordered');
+			//$this->_СоздатьСсылку($this->сТекущаяСтрока, $s0);
+			/*ALL*/
+			//echo 'All'."\n";
+			$this->_CreateTagPack($strBasePath, $arrGenre, $оСтанция, 1);
+			/*All HiFi*/
+			//$this->_CreateTagPack($strBasePath.'/AllHiFi', $arrGenre, $оСтанция);
+			/*Android*/
+			if(in_array($оСтанция->strServer_type, $this->arrAndroidCodec)!==FALSE)
+				{
+				//echo 'Android'."\n";
+				$this->_CreateTagPack($strBasePath.'/Android', $arrGenre, $оСтанция, 1);
+				}
+			/*Android HiFi*/
+			//$this->_CreateTagPack($strBasePath.'/AndroidHiFi', $arrGenre, $оСтанция);
+			/*Apple*/
+			if(in_array($оСтанция->strServer_type, $this->arrAppleCodec)!==FALSE)
+				{
+				//echo 'Apple'."\n";
+				$this->_CreateTagPack($strBasePath.'/Apple', $arrGenre, $оСтанция, 1);
+				}
+			/*Apple HiFi*/
+			//$this->_CreateTagPack($strBasePath.'/AppleHiFi', $arrGenre, $оСтанция);
+			$this->чТекущаяСтрока++;
+			$ч0Х++;
 			$мОбработанныеСсылки[]		=$оСтанцияЧист->listen_url;
 			//print_r($мОбработанныеСсылки);
 			}
