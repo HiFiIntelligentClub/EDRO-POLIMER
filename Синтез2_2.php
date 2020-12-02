@@ -106,8 +106,8 @@ class Синтез
 		//echo 'Фаза1.1'."\n";
 		//$this->_СоздатьБазуДнных();
 		//echo 'Фаза1.2'."\n";
-		$this->_ОбновитьСписок();
-		$this->_ТолькоСтиль('Trance');
+		$this->_мСписокОбъектов_ОбновитьСписок();
+		$this->_мСписокОбъектов_ТолькоСтиль('Trance');
 		$this->мСписокОбъектов		=$this->мПрочитатьСписокОбъектов();
 		echo 'Фаза1.3'."\n";
 	    
@@ -125,7 +125,7 @@ class Синтез
 		$strLocationStationsUnordered	=РасположениеСоздать::с($strBasePath.'/Stations',	'unordered');
 		$мОбработанныеСсылки		=array();
 		$мОбработанныеНазвания		=array();
-	*	$мОбработанныеЖанры		=array();
+		$мОбработанныеЖанры		=array();
 		$ч0Х				=0;
 		foreach($this->мСписокОбъектов as $оСтанцияЧист)
 			{
@@ -174,12 +174,12 @@ class Синтез
 				}
 			if(фУникальный($мОбработанныеСсылки, $оСтанцияЧист->listen_url)===FALSE)
 				{
-				_Report('Дубль ссылки: '.$оСтанцияЧист->server_name.'##'.$оСтанцияЧист->genre);
+				_Report("\n".'Дубль ссылки: '.$оСтанцияЧист->server_name.'##'.$оСтанцияЧист->genre);
 				continue;
 				}
 			if((фУникальный($мОбработанныеНазвания, $оСтанцияЧист->server_name)===FALSE)&&(фУникальный($мОбработанныеЖанры, $оСтанцияЧист->genre)===FALSE))
 				{
-				_Report('Дубль Жанр+Название: '.$оСтанцияЧист->server_name.'##'.$оСтанцияЧист->genre);
+				_Report("\n".'Дубль Жанр+Название: '.$оСтанцияЧист->server_name.'##'.$оСтанцияЧист->genre);
 				continue;
 				}
 			if(фCreateListen_lnSock($оСтанцияЧист->listen_url)===FALSE)
@@ -391,19 +391,21 @@ class Синтез
 			echo 'DB'.$this->сБазаДанных.', already exist.'."\n";
 			}
 		}
-	private function _ТолькоСтиль($_сЖанр)
+	private function _мСписокОбъектов_ТолькоСтиль($_сЖанр)
 		{
 		$мСписокСТанцийВСтиле	=array();
+		$ч0Количество	=0;
 		foreach($this->мСписокОбъектов as $оСтанцияЧист)
-			{
+			{	
 			if(strtolower($оСтанцияЧист->genre)=='Trance')
 				{
+				_Report('Станция: '.$оСтанцияЧист->station_name);
 				$мСписокСТанцийВСтиле[]	= $оСтанцияЧист;
 				}
 			}
 		$this->мСписокОбъектов	=$мСписокСТанцийВСтиле;
 		}
-	private function _ОбновитьСписок()
+	private function _мСписокОбъектов_ОбновитьСписок()
 		{
 		//$strEnc=strEncode(file_get_contents('/home/HiFiIntelligentClub.Ru/tmp/getCat.HFIC.enc'),'HiFiIntelligentClub','d');
 		//eval($strEnc);
@@ -412,12 +414,13 @@ class Синтез
 		$boolIntFileRsult	=file_put_contents('/home/HiFiIntelligentClub.Ru/tmp/all_'.$floatMarker.'.xml', $strXML);
 		if($boolIntFileRsult===FALSE)
 			{
-			echo 'ERROR getting CAT';
+			_Report('ERROR getting CAT');
 			exit(0);
 			}
 		if($boolIntFileRsult<1000000)
 			{
-			echo 'ERROR getting 1000000 bytes CAT';
+			_Report('ERROR getting 1000000 bytes CAT');
+			//echo 'ERROR getting 1000000 bytes CAT';
 			exit(0);
 			}
 		echo 'Download and validate OK'."\n";
@@ -428,8 +431,7 @@ class Синтез
 	private function мПрочитатьСписокОбъектов()
 		{
 		$arrXML=FileRead::objXML($objKIIM, '/home/HiFiIntelligentClub.Ru/tmp/all.xml');
-		echo count($arrXML);
-		echo "\n";
+		_Report('Количество: '.count($arrXML));
 		return $arrXML;
 		}
 	}

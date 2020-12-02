@@ -19,7 +19,13 @@ array(
 	$strReality2	=> $strDb.'/'.$strReality2.'/'.$strTable.'/'.$strOrderType
 	);
 
-
+function фОчиститьРасположение($_мРасполож)
+	{
+	foreach($_мРасполож as $strReality=>$strDestination)
+		{
+		exec('rm -r -f '.$strDestination);
+		}
+	}
 function фСоздатьРасположение($_strIndex2Destination)
 	{
 
@@ -76,6 +82,10 @@ function _CheckO($_nu1Source, $_nu0I)
 		echo '_nu1Source!=(_nu0I+1)'."\n";
 		}
 	}
+
+фОчиститьРасположение($arrIndexDestinations);
+
+
 $arrSourceDirs	=scandir($strIndex2Source);
 $nu1Source	=count($arrSourceDirs);
 
