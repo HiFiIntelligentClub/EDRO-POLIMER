@@ -308,7 +308,7 @@ class Синтез
 		}
 	private function _CreateFullTextIndex($оОбрабатываемыйОбъект, $strLocationSearch, $strServerName, $_strOrder='unordered')
 		{
-		$_сЗаписываемыйОбъектРасполож		=РасположениеСоздать::с($strLocationSearch.'/'.$strServerName, $_strOrder);
+		$_сЗаписываемыйОбъектРасполож		=РасположениеСоздать::с($strLocationSearch.'/'.$оОбрабатываемыйОбъект['strServer_name'], $_strOrder);
 		$this->_СоздатьСсылку($_сЗаписываемыйОбъектРасполож);
 		}
 	private function _CreateName($оОбрабатываемыйОбъект, $strLocationSearch, $strServerName, $_strOrder='unordered')
