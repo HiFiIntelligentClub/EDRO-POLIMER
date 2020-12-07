@@ -143,17 +143,17 @@ class Синтез
 			$arrGenre			=мСобратьФразы($strGenre, 'МалДиректор');
 			unset($strGenre);
 			$оСтанция['intBitrate']		=сПреобразовать($оСтанция['bitrate'], 										"вКоманду");
-			$оСтанция['strServer_type']	=сПреобразовать(strtolower(str_replace(array("/", " ", "audio", "application"), '', $оСтанция['server_type'])),	"вКоманду");
+			$оСтанция['strServer_type']	=сПреобразовать(mb_strtolower(str_replace(array("/", " ", "audio", "application"), '', $оСтанция['server_type'])),	"вКоманду");
 			//$оСтанция->strServer_type	=сПреобразовать(strtolower(str_replace('audio/' ,'' ,$оСтанция->server_type)), 	"вКоманду");
-			$оСтанция['strServer_name']	=сПреобразовать(trim(strtolower($оСтанция['server_name'])), 							"вКоманду");
+			$оСтанция['strServer_name']	=сПреобразовать(trim(mb_strtolower($оСтанция['server_name'])), 							"вКоманду");
 			$оСтанция['strListen_url']	=сПреобразовать(trim($оСтанция['listen_url']), 									"вКоманду");
-
-			$this->_CreatePrimaryIndex($оСтанция, $strLocationStationsPrime, $_strOrder='unordered');
-			$this->_CreateFullTextIndex($оСтанция, $strLocationStationsSearch, $_strOrder='unordered');
-			
-			//$this->_CreateName($оСтанция, $strLocationStationsPrime, $оСтанция['strServer_name'], 'unordered');
-			$this->_СоздатьСсылку($strLocationStationsUnordered);
-
+			if(is_file($strLocationStationsPrime.'/'.$оСтанция['strListen_url'].'.plmr'))
+				{
+				$мОбработанныеСсылки[]		=$оСтанцияЧист['listen_url'];
+				$мОбработанныеНазвания[]	=$оСтанцияЧист['server_name'];
+				$мОбработанныеЖанры[]		=$оСтанцияЧист['genre'];
+				continue;
+				}
 			if(empty($оСтанция['listen_url']))
 				{
 				_Report('empty: $оСтанция[listen_url])'.$оСтанцияЧист['server_name'].'||'.$оСтанцияЧист['listen_url'].'||'.$оСтанцияЧист['genre']);
@@ -170,6 +170,14 @@ class Синтез
 				$мОбработанныеЖанры[]		=$оСтанцияЧист['genre'];
 				continue;
 				}
+
+			$this->_CreatePrimaryIndex($оСтанция, $strLocationStationsPrime, $_strOrder='unordered');
+			$this->_CreateFullTextIndex($оСтанция, $strLocationStationsSearch, $_strOrder='unordered');
+			
+			//$this->_CreateName($оСтанция, $strLocationStationsPrime, $оСтанция['strServer_name'], 'unordered');
+			$this->_СоздатьСсылку($strLocationStationsUnordered);
+
+
 			if(strpos($оСтанцияЧист['server_type'], 'video')!==FALSE)
 				{
 				_Report('strpos($оСтанцияЧист[server_type], video)!==FALSE'.$оСтанцияЧист['server_name'].'||'.$оСтанцияЧист['listen_url'].'||'.$оСтанцияЧист['genre']);
