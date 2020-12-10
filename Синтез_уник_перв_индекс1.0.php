@@ -4,8 +4,8 @@
 © A.A.CheckMaRev 2020 assminog@gmail.com tubmulur@yandex.ru 2020 [25.06.2020]      
 //////|                                                                            
 |_|//|/ /\      Бегемот.(ЕДРО:ПОЛИМЕР.020.Синтез)
-  //|/<  **>                                                                       
- //|/   Jl                                                                         
+  //|/<  **> -------------------->                                                                      
+ //|/   Jl ----------------->                                                                        
 //////| --------------->                                                           
 ||||||/                                                                            
 Благословенный стиль Упрощающий Проверку и Чтение Программы Благословенный.УПИиЧ*/
@@ -86,7 +86,7 @@ class Синтез
 	private		$мСписокОбработанныхОбъектов	=array();
 
 	private		$мСписокОбъектов;
-	private		$оСтанцияЧист;
+	private		$мСтанцияЧист;
 	private		$сЗаписываемыйОбъект;
 
 	private		$сТипОперации		='Чтение_Диск';
@@ -97,18 +97,103 @@ class Синтез
 	private		$ч0ТекущаяСтрока	=0;
 	private		$сИмяТекущегОбъекта	='';
 	private		$мРасположКолВо		=array();
-	private		$arrAndroidCodec		=array('mp3', 'mpeg', 'ogg', 'oggо30оо27оcodecsо26оopus', 'oggо30оо27оcodecsо26оvorbis');
-	private		$arrAppleCodec			=array('aac', 'aacp', 'flac', 'mp3', 'mpeg');
+	private		$arrAndroidCodec	=array('mp3', 'mpeg', 'ogg', 'оopus', 'vorbis');
+	private		$arrAppleCodec		=array('aac', 'aacp', 'flac', 'mp3', 'mpeg');
+	private		$arrICQRType		=
+				array(
+				'Apple'=>
+					array(
+					'Low quality'=>
+						array(
+						'mp3'	=>'<192', 
+						'mpeg'	=>'<192',
+						'aac'	=>'<=64', 
+						'aacp'	=>'<=64',
+						),
+					'HiFi beginner'=>
+						array(
+						'mp3'	=>'>=192', 
+						'mpeg'	=>'>=192',
+						'aac'	=>'>=64<192', 
+						'aacp'	=>'>=64<192',
+						),
+					'HiFi lover'=>
+						array(
+						'aac'	=>'<192=1024', 
+						'aacp'	=>'<64=<1024',
+						),
+					'HiFi Top'=>
+						array(
+						'aac'	=>'>1024',  //Will be tested, may increase to 1500
+						'aacp'	=>'>1024',  //Will be tested, may increase to 1500
+						),
+					'2.1'=>
+						array
+						(
+						),
+					'5.1'=>
+					array
+						(
+						),
+					'7.1'=>
+					array
+						(
+						),
+					),
+				'Android'=>
+					array(
+					'Low quality'=>
+						array(
+						'mp3'	=>'<192',
+						'mpeg'	=>'<192',
+						'ogg'	=>'<=96',
+						'opus'	=>'<=96',
+						'vorbis'=>'<=96',
+						),
+					'HiFi beginner'=>
+						array(
+						'mp3'	=>'>=192',
+						'mpeg'	=>'>=192',
+						'ogg'	=>'>=96=<256',
+						'opus'	=>'>=96=<256',
+						'vorbis'=>'>=96=<256',
+						),
+					'HiFi lover'=>
+						array(
+						'ogg'	=>'<256=<1024',
+						'opus'	=>'<256=<1024',
+						'vorbis'=>'<256=<1024',
+						),
+					'HiFi Top'=>
+						array(
+						'ogg'	=>'>1024', //Will be tested, may increase to 1500
+						'opus'	=>'>1024', //Will be tested, may increase to 1500
+						'vorbis'=>'>1024', //Will be tested, may increase to 1500
+						),
+					'2.1'=>
+						array
+						(
+						),
+					'5.1'=>
+					array
+						(
+						),
+					'7.1'=>
+					array
+						(
+						),
+					),
+				);
 
 
 	public function __construct()
 		{
-		echo 'Очистить БД'."\n";
-		$this->_ОчиститьБазуДанных();
-		echo 'Создать БД'."\n";
-		$this->_СоздатьБазуДнных();
-		echo 'Обновить список станций'."\n";
-		$this->_ОбновитьСписок();
+	//	echo 'Очистить БД'."\n";
+		//$this->_ОчиститьБазуДанных();
+		//echo 'Создать БД'."\n";
+		//$this->_СоздатьБазуДнных();
+		//echo 'Обновить список станций'."\n";
+		//$this->_ОбновитьСписок();
 		echo 'Загрузить список станций в оперативную память'."\n";
 		$this->мСписокОбъектов		=$this->мПрочитатьСписокОбъектов();
 		echo 'Создть Базу Данных ЕДРО:ПОЛИМЕР ИВ'."\n";
@@ -128,25 +213,41 @@ class Синтез
 		$мОбработанныеНазвания		=array();
 		$мОбработанныеЖанры		=array();
 		$ч0Х				=0;
-		foreach($this->мСписокОбъектов as $оСтанцияЧист)
+		foreach($this->мСписокОбъектов as $мСтанцияЧист)
 			{
-			//print_r($оСтанцияЧист);
-			$this->оСтанцияЧист		=$оСтанцияЧист;
+			//print_r($мСтанцияЧист);
+			//exit;
 			//$strFromEnc	=mb_detect_encoding($оСтанцияЧист['server_name']);
 			//$strToEnc	='UTF-8';
 			//$оСтанцияЧист['server_name']=mb_convert_encoding($оСтанцияЧист['server_name'],$strToEnc, $strFromEnc);
 			    
-			$оСтанцияЧист['listen_url']	=сЗаменаСлэшУЕ($оСтанцияЧист['listen_url']);
-			$оСтанцияЧист['server_name']	=сЗаменаСлэшУ($оСтанцияЧист['server_name']);
-			$оСтанция			=$оСтанцияЧист;
-			$strGenre			=(string)str_replace(array('(',')'), '', $оСтанцияЧист['genre']);
-			$arrGenre			=мСобратьФразы($strGenre, 'МалДиректор');
-			unset($strGenre);
-			$оСтанция['intBitrate']		=сПреобразовать($оСтанция['bitrate'], 										"вКоманду");
-			$оСтанция['strServer_type']	=сПреобразовать(strtolower(str_replace(array("/", " ", "audio", "application"), '', $оСтанция['server_type'])),	"вКоманду");
-			//$оСтанция->strServer_type	=сПреобразовать(strtolower(str_replace('audio/' ,'' ,$оСтанция->server_type)), 	"вКоманду");
-			$оСтанция['strServer_name']	=сПреобразовать(trim(strtolower($оСтанция['server_name'])), 							"вКоманду");
-			$оСтанция['strListen_url']	=сПреобразовать(trim($оСтанция['listen_url']), 									"вКоманду");
+			//$оСтанцияЧист['listen_url']	=сЗаменаСлэшУЕ($оСтанцияЧист['listen_url']);
+			//$оСтанцияЧист['server_name']	=сЗаменаСлэшУ($оСтанцияЧист['server_name']);
+			//$мСтанция			=$мСтанцияЧист;
+			$мСтанцияЧистS['genre']			=trim(strSafeUsers(str_replace(array( '(',')' ), '', $мСтанцияЧист['genre'])));
+			$мСтанцияЧистS['server_type']		=trim(strSafeUsers(strtolower(str_replace(array("/", " ", "audio", "application", "ogg:codecs=", "ogg: codecs="), '', $мСтанцияЧист['server_type']))));
+			$мСтанцияЧистS['server_name']		=trim(strSafeUsers($мСтанцияЧист['server_name']));
+			$мСтанцияЧистS['bitrate']		=trim(strSafeUsers($мСтанцияЧист['bitrate']));
+			$мСтанцияЧистS['current_song']		=trim(strSafeUsers($мСтанцияЧист['current_song']));
+			$мСтанцияЧистS['listen_url']		=trim(strSafeUsers($мСтанцияЧист['listen_url']));
+			$мСтанцияЧистS['samplerate']		=trim(strSafeUsers($мСтанцияЧист['samplerate']));
+			$мСтанцияЧистS['channels']		=trim(strSafeUsers($мСтанцияЧист['channels']));
+									     unset($мСтанцияЧист);
+			$мСтанцияЧист				=$мСтанцияЧистS;
+							   unset($мСтанцияЧистS);
+
+			$мСтанцияЧист['мСтильДляЧел']		=мСобратьФразы($мСтанцияЧист['genre'], 			'НеТрог');
+			$мСтанцияЧист['мСтильДляРасполож']	=мСобратьФразы($мСтанцияЧист['genre'], 			'МалДиректор');
+			$мСтанцияЧист['id']			=сПреобразовать($мСтанцияЧист['listen_url'], 		"вКоманду");
+			$мСтанция['strServer_name']		=сПреобразовать($мСтанцияЧист['server_name'], 		"вКоманду");
+			$мСтанция['strServer_type']		=сПреобразовать($мСтанцияЧист['server_type'],		"вКоманду");
+			$мСтанция['intBitrate']			=сПреобразовать($мСтанцияЧист['bitrate'], 		"вКоманду");
+
+			//print_r($мСтанция);
+			//print_r($мСтанцияЧист);
+			exit;
+			//$мСтанцияЧист			='';
+			//$мСтанция			='';
 
 			$this->_CreatePrimaryIndex($оСтанция, $strLocationStationsPrime, $_strOrder='unordered');
 			$this->_CreateFullTextIndex($оСтанция, $strLocationStationsSearch, $_strOrder='unordered');
@@ -154,7 +255,9 @@ class Синтез
 			//$this->_CreateName($оСтанция, $strLocationStationsPrime, $оСтанция['strServer_name'], 'unordered');
 			$this->_СоздатьСсылку($strLocationStationsUnordered);
 
-			if(empty($оСтанция['listen_url']))
+			if(
+				empty($оСтанция['listen_url'])
+				)
 				{
 				_Report('empty: $оСтанция[listen_url])'.$оСтанцияЧист['server_name'].'||'.$оСтанцияЧист['listen_url'].'||'.$оСтанцияЧист['genre']);
 				$мОбработанныеСсылки[]		=$оСтанцияЧист['listen_url'];
@@ -162,7 +265,9 @@ class Синтез
 				$мОбработанныеЖанры[]		=$оСтанцияЧист['genre'];
 				continue;
 				}
-			if($оСтанция['listen_url']=="")
+			if(
+				$оСтанция['listen_url']==""
+				)
 				{
 				_Report('$оСтанция[listen_url]==""'.$оСтанцияЧист['server_name'].'||'.$оСтанцияЧист['listen_url'].'||'.$оСтанцияЧист['genre']);
 				$мОбработанныеСсылки[]		=$оСтанцияЧист['listen_url'];
@@ -170,7 +275,9 @@ class Синтез
 				$мОбработанныеЖанры[]		=$оСтанцияЧист['genre'];
 				continue;
 				}
-			if(strpos($оСтанцияЧист['server_type'], 'video')!==FALSE)
+			if(
+				strpos($оСтанцияЧист['server_type'], 'video')!==FALSE
+				)
 				{
 				_Report('strpos($оСтанцияЧист[server_type], video)!==FALSE'.$оСтанцияЧист['server_name'].'||'.$оСтанцияЧист['listen_url'].'||'.$оСтанцияЧист['genre']);
 				$мОбработанныеСсылки[]		=$оСтанцияЧист['listen_url'];
@@ -178,7 +285,9 @@ class Синтез
 				$мОбработанныеЖанры[]		=$оСтанцияЧист['genre'];
 				continue;
 				}
-			if(strpos($оСтанцияЧист['server_type'], 'usac')!==FALSE)
+			if(
+				strpos($оСтанцияЧист['server_type'], 'usac')!==FALSE
+				)
 				{
 				_Report('usac: '.$оСтанцияЧист['server_name'].'##'.$оСтанцияЧист['genre']);
 				$мОбработанныеСсылки[]		=$оСтанцияЧист['listen_url'];
@@ -186,7 +295,9 @@ class Синтез
 				$мОбработанныеЖанры[]		=$оСтанцияЧист['genre'];
 				continue;
 				}
-			if(фУникальный($мОбработанныеСсылки, $оСтанцияЧист['listen_url'])!==TRUE)
+			if(	
+				фУникальный($мОбработанныеСсылки, $оСтанцияЧист['listen_url'])!==TRUE
+				)
 				{
 				_Report('фУникальный($мОбработанныеСсылки, $оСтанцияЧист[listen_url])===TRUE:'.$оСтанцияЧист['server_name'].'||'.$оСтанцияЧист['listen_url'].'||'.$оСтанцияЧист['genre']);
 				$мОбработанныеСсылки[]		=$оСтанцияЧист['listen_url'];
@@ -199,7 +310,9 @@ class Синтез
 			//	_Report('фДубль($мОбработанныеСсылки, $оСтанцияЧист)===TRUE:'.$оСтанцияЧист->server_name.'||'.$оСтанцияЧист->listen_url.'||'.$оСтанцияЧист->genre);
 			//	continue;
 			//	}
-			if((фУникальный($мОбработанныеНазвания, $оСтанцияЧист['server_name'])===FALSE)&&(фУникальный($мОбработанныеЖанры, $оСтанцияЧист['genre'])===FALSE))
+			if(
+				фДубль($мОбработанныеСтанции,$мСтанция)
+				)
 				{
 				_Report("\n".'Дубль Жанр+Название: '.$оСтанцияЧист['server_name'].'##'.$оСтанцияЧист['genre']);
 				$мОбработанныеСсылки[]		=$оСтанцияЧист['listen_url'];
@@ -243,6 +356,7 @@ class Синтез
 			
 			$this->ч0ТекущаяСтрока++;
 			$ч0Х++;
+			$мОбработанныеСтанции[]		=$мСтанция;
 			$мОбработанныеСсылки[]		=$оСтанцияЧист['listen_url'];
 			$мОбработанныеНазвания[]	=$оСтанцияЧист['server_name'];
 			$мОбработанныеЖанры[]		=$оСтанцияЧист['genre'];
