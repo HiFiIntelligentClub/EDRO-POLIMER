@@ -105,84 +105,100 @@ class Синтез
 				array(
 				'Apple'=>
 					array(
-					'Low quality'=>
+					'mp3'=>	
 						array(
-						'mp3'	=>'<192', 
-						'mpeg'	=>'<192',
-						'aac'	=>'<=64', 
-						'aacp'	=>'<=64',
+						'Low quality'	=>'<192',
+						'HiFi beginner'	=>'>=192',
+						'HiFi lover'	=>false,
+						'HiFi Top'	=>false,
+						'2.1'		=>false,
+						'5.1'		=>false,
+						'7.1'		=>false,
 						),
-					'HiFi beginner'=>
+					'mpeg'=>	
 						array(
-						'mp3'	=>'>=192', 
-						'mpeg'	=>'>=192',
-						'aac'	=>'>=64<192', 
-						'aacp'	=>'>=64<192',
+						'Low quality'	=>'<192',
+						'HiFi beginner'	=>'>=192',
+						'HiFi lover'	=>false,
+						'HiFi Top'	=>false,
+						'2.1'		=>false,
+						'5.1'		=>false,
+						'7.1'		=>false,
 						),
-					'HiFi lover'=>
+
+					'aac'=>	
 						array(
-						'aac'	=>'<192=1024', 
-						'aacp'	=>'<64=<1024',
+						'Low quality'	=>'=<64',
+						'HiFi beginner'	=>'>=64<192'
+						'HiFi lover'	=>'<192<1024',
+						'HiFi Top'	=>'>1024',
+						'2.1'		=>false,
+						'5.1'		=>false,
+						'7.1'		=>false,
 						),
-					'HiFi Top'=>
+
+					'aacp'=>	
 						array(
-						'aac'	=>'>1024',  //Will be tested, may increase to 1500
-						'aacp'	=>'>1024',  //Will be tested, may increase to 1500
-						),
-					'2.1'=>
-						array
-						(
-						),
-					'5.1'=>
-					array
-						(
-						),
-					'7.1'=>
-					array
-						(
+						'Low quality'	=>'=<64',
+						'HiFi beginner'	=>'>=64<192',
+						'HiFi lover'	=>'<192<1024',
+						'HiFi Top'	=>'>1024',
+						'2.1'		=>false,
+						'5.1'		=>false,
+						'7.1'		=>false,
 						),
 					),
 				'Android'=>
 					array(
-					'Low quality'=>
+					'mp3'	=>
 						array(
-						'mp3'	=>'<192',
-						'mpeg'	=>'<192',
-						'ogg'	=>'<=96',
-						'opus'	=>'<=96',
-						'vorbis'=>'<=96',
+						'Low quality'	=>'<192',
+						'HiFi beginner'	=>'>=192',
+						'HiFi lover'	=>false,
+						'HiFi Top'	=>false,
+						'2.1'		=>false,
+						'5.1'		=>false,
+						'7.1'		=>false,
 						),
-					'HiFi beginner'=>
+					'mpeg'	=>
 						array(
-						'mp3'	=>'>=192',
-						'mpeg'	=>'>=192',
-						'ogg'	=>'>=96=<256',
-						'opus'	=>'>=96=<256',
-						'vorbis'=>'>=96=<256',
+						'Low quality'	=>'<192',
+						'HiFi beginner'	=>'>=192',
+						'HiFi lover'	=>false,
+						'HiFi Top'	=>false,
+						'2.1'		=>false,
+						'5.1'		=>false,
+						'7.1'		=>false,
 						),
-					'HiFi lover'=>
+					'ogg'	=>
 						array(
-						'ogg'	=>'<256=<1024',
-						'opus'	=>'<256=<1024',
-						'vorbis'=>'<256=<1024',
+						'Low quality'	=>'<=96',
+						'HiFi beginner'	=>'>=96=<256',
+						'HiFi lover'	=>'<256=<1024',
+						'HiFi Top'	=>'>1024',
+						'2.1'		=>false,
+						'5.1'		=>false,
+						'7.1'		=>false,
 						),
-					'HiFi Top'=>
+					'opus'	=>
 						array(
-						'ogg'	=>'>1024', //Will be tested, may increase to 1500
-						'opus'	=>'>1024', //Will be tested, may increase to 1500
-						'vorbis'=>'>1024', //Will be tested, may increase to 1500
+						'Low quality'	=>'<=96',
+						'HiFi beginner'	=>'>=96=<256',
+						'HiFi lover'	=>'<256=<1024',
+						'HiFi Top'	=>'>1024',
+						'2.1'		=>false,
+						'5.1'		=>false,
+						'7.1'		=>false,
 						),
-					'2.1'=>
-						array
-						(
-						),
-					'5.1'=>
-					array
-						(
-						),
-					'7.1'=>
-					array
-						(
+					'vorbis'=>
+						array(
+						'Low quality'	=>'<=96',
+						'HiFi beginner'	=>'>=96=<256',
+						'HiFi lover'	=>'<256=<1024',
+						'HiFi Top'	=>'>1024',
+						'2.1'		=>false,
+						'5.1'		=>false,
+						'7.1'		=>false,
 						),
 					),
 				);
@@ -190,12 +206,12 @@ class Синтез
 
 	public function __construct()
 		{
-	//	echo 'Очистить БД'."\n";
-		//$this->_ОчиститьБазуДанных();
-		//echo 'Создать БД'."\n";
-		//$this->_СоздатьБазуДнных();
-		//echo 'Обновить список станций'."\n";
-		//$this->_ОбновитьСписок();
+		echo 'Очистить БД'."\n";
+		$this->_ОчиститьБазуДанных();
+		echo 'Создать БД'."\n";
+		$this->_СоздатьБазуДнных();
+		echo 'Обновить список станций'."\n";
+		$this->_ОбновитьСписок();
 		echo 'Загрузить список станций в оперативную память'."\n";
 		$this->мСписокОбъектов		=$this->мПрочитатьСписокОбъектов();
 		echo 'Создть Базу Данных ЕДРО:ПОЛИМЕР ИВ'."\n";
@@ -339,9 +355,7 @@ class Синтез
 		$strLocationStationsGenres	=РасположениеСоздать::с($strBasePath.'/Stations',	'genres');
 		$strLocationStationsICQR	=РасположениеСоздать::с($strBasePath.'/Stations',	'ICQR');
 		$strLocationStationsHistory	=РасположениеСоздать::с($strBasePath.'/Stations',	'history');
-		$мОбработанныеСсылки		=array();
-		$мОбработанныеНазвания		=array();
-		$мОбработанныеЖанры		=array();
+		$мОбрСтан			=array();
 		$ч0Х				=0;
 		foreach($this->мСписокОбъектов as $мСтанцияЧист)
 			{
