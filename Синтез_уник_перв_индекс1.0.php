@@ -103,103 +103,76 @@ class Синтез
 	private		$arrAppleCodec		=array('aac', 'aacp', 'flac', 'mp3', 'mpeg');
 	private		$arrICQRType		=
 				array(
-				'Apple'=>
+				'mp3'=>	
 					array(
-					'mp3'=>	
-						array(
-						'Low quality'	=>'<192',
-						'HiFi beginner'	=>'>=192',
-						'HiFi lover'	=>false,
-						'HiFi Top'	=>false,
-						'2.1'		=>false,
-						'5.1'		=>false,
-						'7.1'		=>false,
-						),
-					'mpeg'=>	
-						array(
-						'Low quality'	=>'<192',
-						'HiFi beginner'	=>'>=192',
-						'HiFi lover'	=>false,
-						'HiFi Top'	=>false,
-						'2.1'		=>false,
-						'5.1'		=>false,
-						'7.1'		=>false,
-						),
-
-					'aac'=>	
-						array(
-						'Low quality'	=>'=<64',
-						'HiFi beginner'	=>'>=64<192'
-						'HiFi lover'	=>'<192<1024',
-						'HiFi Top'	=>'>1024',
-						'2.1'		=>false,
-						'5.1'		=>false,
-						'7.1'		=>false,
-						),
-
-					'aacp'=>	
-						array(
-						'Low quality'	=>'=<64',
-						'HiFi beginner'	=>'>=64<192',
-						'HiFi lover'	=>'<192<1024',
-						'HiFi Top'	=>'>1024',
-						'2.1'		=>false,
-						'5.1'		=>false,
-						'7.1'		=>false,
-						),
+					'Low quality'	=>'0_192',
+					'HiFi beginner'	=>'192_320',
+					'HiFi lover'	=>false,
+					'HiFi Top'	=>false,
+					'2.1'		=>false,
+					'5.1'		=>false,
+					'7.1'		=>false,
 					),
-				'Android'=>
+				'mpeg'=>	
 					array(
-					'mp3'	=>
-						array(
-						'Low quality'	=>'<192',
-						'HiFi beginner'	=>'>=192',
-						'HiFi lover'	=>false,
-						'HiFi Top'	=>false,
-						'2.1'		=>false,
-						'5.1'		=>false,
-						'7.1'		=>false,
-						),
-					'mpeg'	=>
-						array(
-						'Low quality'	=>'<192',
-						'HiFi beginner'	=>'>=192',
-						'HiFi lover'	=>false,
-						'HiFi Top'	=>false,
-						'2.1'		=>false,
-						'5.1'		=>false,
-						'7.1'		=>false,
-						),
-					'ogg'	=>
-						array(
-						'Low quality'	=>'<=96',
-						'HiFi beginner'	=>'>=96=<256',
-						'HiFi lover'	=>'<256=<1024',
-						'HiFi Top'	=>'>1024',
-						'2.1'		=>false,
-						'5.1'		=>false,
-						'7.1'		=>false,
-						),
-					'opus'	=>
-						array(
-						'Low quality'	=>'<=96',
-						'HiFi beginner'	=>'>=96=<256',
-						'HiFi lover'	=>'<256=<1024',
-						'HiFi Top'	=>'>1024',
-						'2.1'		=>false,
-						'5.1'		=>false,
-						'7.1'		=>false,
-						),
-					'vorbis'=>
-						array(
-						'Low quality'	=>'<=96',
-						'HiFi beginner'	=>'>=96=<256',
-						'HiFi lover'	=>'<256=<1024',
-						'HiFi Top'	=>'>1024',
-						'2.1'		=>false,
-						'5.1'		=>false,
-						'7.1'		=>false,
-						),
+					'Low quality'	=>'0_192',
+					'HiFi beginner'	=>'192_320',
+					'HiFi lover'	=>false,
+					'HiFi Top'	=>false,
+					'2.1'		=>false,
+					'5.1'		=>false,
+					'7.1'		=>false,
+					),
+				'aac'=>	
+					array(
+					'Low quality'	=>'0_64',
+					'HiFi beginner'	=>'64_192'
+					'HiFi lover'	=>'192_1024',
+					'HiFi Top'	=>'1024_2048',
+					'2.1'		=>false,
+					'5.1'		=>false,
+					'7.1'		=>false,
+					),
+				'aacp'=>	
+					array(
+					'Low quality'	=>'0_64',
+					'HiFi beginner'	=>'64_192'
+					'HiFi lover'	=>'192_1024',
+					'HiFi Top'	=>'1024_2048',
+					'2.1'		=>false,
+					'5.1'		=>false,
+					'7.1'		=>false,
+					),
+				),
+				'ogg'	=>
+					array(
+					'Low quality'	=>'0_160',
+					'HiFi beginner'	=>'160_512',
+					'HiFi lover'	=>'512_1024',
+					'HiFi Top'	=>'1024_2048',
+					'2.1'		=>false,
+					'5.1'		=>false,
+					'7.1'		=>false,
+					),
+				'opus'	=>
+					array(
+					'Low quality'	=>'0_160',
+					'HiFi beginner'	=>'160_512',
+					'HiFi lover'	=>'512_1024',
+					'HiFi Top'	=>'1024_2048',
+					'2.1'		=>false,
+					'5.1'		=>false,
+					'7.1'		=>false,
+					),
+				'vorbis'=>
+					array(
+					'Low quality'	=>'0_160',
+					'HiFi beginner'	=>'160_512',
+					'HiFi lover'	=>'512_1024',
+					'HiFi Top'	=>'1024_2048',
+					'2.1'		=>false,
+					'5.1'		=>false,
+					'7.1'		=>false,
 					),
 				);
 
