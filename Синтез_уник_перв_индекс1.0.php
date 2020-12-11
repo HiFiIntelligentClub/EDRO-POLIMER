@@ -365,26 +365,22 @@ class Синтез
 			$мСтанцияЧистS['channels']		=trim(strSafeUsers($мСтанцияЧист['channels']));
 									     unset($мСтанцияЧист);
 			$мСтанцияЧист				=$мСтанцияЧистS;
-							   unset($мСтанцияЧистS);
+			//				   unset($мСтанцияЧистS);
 
 			$мСтильДляЧел				=мСобратьФразы($strGenre, 			'НеТрог');
 			$мСтильДляРасполож			=мСобратьФразы($strGenre, 			'МалДиректор');
 			
-
 			$this->_CreatePrimaryIndex($strLocationStationsPrime, 		$мСтанцияЧист);
 			$this->_CreateFullTextIndex($strLocationStationsSearch,		$мСтанцияЧист);
 			$this->_AddJoinedTableBelongs($strLocationStationsGenres,	$мСтильДляЧел);
 			$this->_AddJoinedTableBelongs($strLocationStationsICQR,		array());
 			$this->_AddJoinedTableHasMany($strLocationStationsHistory,	array('strEvent'=>date('Y-m-d H:i:s')));
 			$this->_СоздатьСсылку($strLocationStationsUnordered);
-			print_r($мСтанцияЧист);
-			exit;
-			
 		
 
 			if(empty($мСтанцияЧист['id']))
 				{
-				_Report('empty: $оСтанция[listen_url])'.$мСтанцияЧист['server_name'].'||'.$мСтанцияЧист['id'].'||'.$strGenre;);
+				_Report('empty: $оСтанция[listen_url]'.$мСтанцияЧист['server_name'].'||'.$мСтанцияЧист['id'].'||'.$strGenre);
 				$мОбрСтан[]	=
 					array(
 						'id'	=>$мСтанцияЧист['id'],
@@ -395,7 +391,7 @@ class Синтез
 				}
 			if($мСтанцияЧист['id']=="")
 				{
-				_Report('$оСтанция[listen_url]==""'.$мСтанцияЧист['server_name'].'||'.$моСтанцияЧист['id'].'||'.$strGenre;);
+				_Report('$оСтанция[listen_url]==""'.$мСтанцияЧист['server_name'].'||'.$моСтанцияЧист['id'].'||'.$strGenre);
 				$мОбрСтан[]	=
 					array(
 						'id'	=>$мСтанцияЧист['id'],
@@ -406,7 +402,7 @@ class Синтез
 				}
 			if(strpos($мСтанцияЧист['server_type'], 'video')!==FALSE)
 				{
-				_Report('strpos($оСтанцияЧист[server_type], video)!==FALSE'.$мСтанцияЧист['server_name'].'||'.$мСтанцияЧист['id'].'||'.$strGenre;);
+				_Report('strpos($оСтанцияЧист[server_type], video)!==FALSE'.$мСтанцияЧист['server_name'].'||'.$мСтанцияЧист['id'].'||'.$strGenre);
 				$мОбрСтан[]	=
 					array(
 						'id'	=>$мСтанцияЧист['id'],
@@ -459,6 +455,7 @@ class Синтез
 			if(in_array($мСтанцияЧист['server_type'], $this->arrAndroidCodec)!==FALSE)
 				{
 				//echo 'Android'."\n";
+				//$this->_CreateFullTextIndex($strLocationStationsSearch,		$мСтанцияЧист);
 				$this->_CreateTagPack($strBasePath.'/Android', $мСтильДляРасполож, $мСтанцияЧист, 1);
 				}
 			if(in_array($мСтанцияЧист['server_type'], $this->arrAppleCodec)!==FALSE)
