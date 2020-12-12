@@ -15,5 +15,11 @@ EЕЕЕЕ.ЕЕЕЕЕЕЕЕЕЕДДДД.ДДДД.Д.ДДДДРРРРР.РРРРР
 Р - Реальность, В какую  реальность мы прикрепляем данных кусочек. Куда именно?<br/>
 О - всё вместе, это набор активных объектов, которые готовы работать совместно.<br/><br/>
 <br/>
+
+# Features
+* Counts view of a record, table row or group of records.
+* Smart adaptation to reality (Platform, can react on Reality for example:Detects Android or iPhone, and shows different rows from table, adopted to Reality).
+
+
 © Andrey Chekmaryov tubmulur@yandex.ru 2020<br/>
 
