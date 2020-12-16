@@ -30,10 +30,12 @@
 * Smart adaptation to reality (Platform, can react on Reality for example:Detects Android or iPhone, and shows different rows from table, adopted to Reality).
 
 # Методы
-_CreatePrimaryIndex('Database/Table', dataObject);<br/>
-_CreateFullTextIndex('Database/Table', dataObject);<br/>
-_AddJoinedTable_Belongs('Database/Table/BelongsTo', Relative object);<br/>
-_AddJoinedTable_HasMany('Database/Table/BelongsTo', Relative object);<br/>
+_СоздатьРасположение('HiFiIntelligentClub');<br/>
+_СоздатьСписок('Stations');<br/>
+_СоздатьПервичныйКаталог();<br/>
+_ДобавитьПолнотекстПоиск_ДляСвойства();<br/>
+_ПодключитьКОбъекту_СвязанныйОбъект();<br/>
+_ПодключитьКОбъекту_СвязанныйСписок();<br/>
 
 © Andrey Chekmaryov tubmulur@yandex.ru 2020<br/>
 
