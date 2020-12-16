@@ -24,9 +24,16 @@
 <br/>
 
 # Features
+
+
 * Counts view of a record, table row or group of records.
 * Smart adaptation to reality (Platform, can react on Reality for example:Detects Android or iPhone, and shows different rows from table, adopted to Reality).
 
+# Методы
+_CreatePrimaryIndex('Database/Table', dataObject);<br/>
+_CreateFullTextIndex('Database/Table', dataObject);<br/>
+_AddJoinedTable_Belongs('Database/Table/BelongsTo', Relative object);<br/>
+_AddJoinedTable_HasMany('Database/Table/BelongsTo', Relative object);<br/>
 
 © Andrey Chekmaryov tubmulur@yandex.ru 2020<br/>
 
