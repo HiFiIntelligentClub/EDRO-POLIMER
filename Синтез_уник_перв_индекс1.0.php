@@ -39,7 +39,7 @@ $сРасположОбъект	='/home/ЕДРО:ПОЛИМЕР/о2о.Синте
 //exec('mkdir -p /home/ЕДРО:ПОЛИМЕР/о2о.Синтез.ЕДРО/о2о.Если/о2о.Действие/о2о.Реальность/о2о.Объект');
 
 
-echo'Загруз:Фраза.'."\n";
+/*echo'Загруз:Фраза.'."\n";
 $сРасположEvent		='/Чтение_ОЗУ';
 $сРасположDestination	='/ОЗУ';
 $сРасположReality	='/ЛокалОблако';
@@ -61,7 +61,7 @@ $сРасположDestination	='/ОЗУ';
 $сРасположReality	='/ЛокалОблако';
 $сРасположObject	='/Список/ЗагрузитьСписок.php';
 require_once($сРасположОбъект.$сРасположEvent.$сРасположDestination.$сРасположReality.$сРасположObject);
-echo'Загруз:ЗагрузСписок->загрузил модуль.'."\n";
+echo'Загруз:ЗагрузСписок->загрузил модуль.'."\n";*/
 
 echo'Загруз:РасположениеКоличество.'."\n";
 $сРасположEvent		='/Чтение_Диск';
@@ -84,6 +84,7 @@ class Синтез
 	{
 	private		$мСписокОбъектовДляОбработки	=array();
 	private		$мСписокОбработанныхОбъектов	=array();
+	private		$strLocationStationsPrime	='';
 
 	private		$мСписокОбъектов;
 	private		$мСтанцияЧист;
@@ -98,8 +99,9 @@ class Синтез
 	private		$сТекущаяСтрока		='';
 	private		$сТекущаяСтрокаИД	='';
 	private		$сИмяТекущегОбъекта	='';
+	private		$сТекущееУстройство	='';
 	private		$мРасположКолВо		=array();
-	private		$arrAndroidCodec	=array('mp3', 'mpeg', 'ogg', 'оopus', 'vorbis');
+	private		$arrAndroidCodec	=array('mp3', 'mpeg', 'ogg', 'opus', 'vorbis');
 	private		$arrAppleCodec		=array('aac', 'aacp', 'flac', 'mp3', 'mpeg');
 	private		$arrICQRType		=
 				array(
@@ -107,52 +109,51 @@ class Синтез
 					array(
 					'Low quality'	=>'0_192',
 					'HiFi beginner'	=>'192_320',
-					'HiFi lover'	=>false,
-					'HiFi Top'	=>false,
-					'2.1'		=>false,
-					'5.1'		=>false,
-					'7.1'		=>false,
+				//	'HiFi lover'	=>false,
+				//	'HiFi Top'	=>false,
+				//	'2.1'		=>false,
+				//	'5.1'		=>false,
+				//	'7.1'		=>false,
 					),
 				'mpeg'=>	
 					array(
 					'Low quality'	=>'0_192',
 					'HiFi beginner'	=>'192_320',
-					'HiFi lover'	=>false,
-					'HiFi Top'	=>false,
-					'2.1'		=>false,
-					'5.1'		=>false,
-					'7.1'		=>false,
+				//	'HiFi lover'	=>false,
+				//	'HiFi Top'	=>false,
+				//	'2.1'		=>false,
+				//	'5.1'		=>false,
+				//	'7.1'		=>false,
 					),
 				'aac'=>	
 					array(
 					'Low quality'	=>'0_64',
-					'HiFi beginner'	=>'64_192'
+					'HiFi beginner'	=>'64_192',
 					'HiFi lover'	=>'192_1024',
 					'HiFi Top'	=>'1024_2048',
-					'2.1'		=>false,
-					'5.1'		=>false,
-					'7.1'		=>false,
+				//	'2.1'		=>false,
+				//	'5.1'		=>false,
+				//	'7.1'		=>false,
 					),
 				'aacp'=>	
 					array(
 					'Low quality'	=>'0_64',
-					'HiFi beginner'	=>'64_192'
+					'HiFi beginner'	=>'64_192',
 					'HiFi lover'	=>'192_1024',
 					'HiFi Top'	=>'1024_2048',
-					'2.1'		=>false,
-					'5.1'		=>false,
-					'7.1'		=>false,
+				//	'2.1'		=>false,
+				//	'5.1'		=>false,
+				//	'7.1'		=>false,
 					),
-				),
 				'ogg'	=>
 					array(
 					'Low quality'	=>'0_160',
 					'HiFi beginner'	=>'160_512',
 					'HiFi lover'	=>'512_1024',
 					'HiFi Top'	=>'1024_2048',
-					'2.1'		=>false,
-					'5.1'		=>false,
-					'7.1'		=>false,
+				//	'2.1'		=>false,
+				//	'5.1'		=>false,
+				//	'7.1'		=>false,
 					),
 				'opus'	=>
 					array(
@@ -160,9 +161,9 @@ class Синтез
 					'HiFi beginner'	=>'160_512',
 					'HiFi lover'	=>'512_1024',
 					'HiFi Top'	=>'1024_2048',
-					'2.1'		=>false,
-					'5.1'		=>false,
-					'7.1'		=>false,
+				//	'2.1'		=>false,
+				//	'5.1'		=>false,
+				//	'7.1'		=>false,
 					),
 				'vorbis'=>
 					array(
@@ -170,9 +171,19 @@ class Синтез
 					'HiFi beginner'	=>'160_512',
 					'HiFi lover'	=>'512_1024',
 					'HiFi Top'	=>'1024_2048',
-					'2.1'		=>false,
-					'5.1'		=>false,
-					'7.1'		=>false,
+				//	'2.1'		=>false,
+				//	'5.1'		=>false,
+				//	'7.1'		=>false,
+					),
+				'flac'=>
+					array(
+				//	 'Low quality'	=>false,
+				//	'HiFi beginner'	=>false,
+					'HiFi lover'	=>'0_4000',
+				//	'HiFi Top'	=>false,
+				//	'2.1'		=>false,
+				//	'5.1'		=>false,
+				//	'7.1'		=>false,
 					),
 				);
 
@@ -192,36 +203,39 @@ class Синтез
 		echo 'Фаза1.='."\n";
 		}
 
-	private function _CreatePrimaryIndex($_strLocationPrime, $мОбрабатываемыйОбъект)
+	private function strCreatePrimaryIndex($мОбрабатываемыйОбъект)
 		{
 		$this->сТекущаяСтрокаИД			=$мОбрабатываемыйОбъект['id'];
-		$сЗаписываемыйОбъект			=$_strLocationPrime.'/'.$мОбрабатываемыйОбъект['id'].'.plmr';
+		$сРасположЗаписываемыйОбъект		=$this->strLocationStationsPrime.'/'.$мОбрабатываемыйОбъект['id'].'.plmr';
 		
-		if(file_put_contents($сЗаписываемыйОбъект, strMyJson($мОбрабатываемыйОбъект))===FALSE)
+
+		if(file_put_contents($сРасположЗаписываемыйОбъект, strMyJson($мОбрабатываемыйОбъект))===FALSE)
 			{
-			_Report('Primary index write error:'.$сЗаписываемыйОбъект);
+			_Report('Primary index write error:'.$сРасположЗаписываемыйОбъект);
+			echo 'errr';
+			exit;
 			}
 		else
 			{
-			$this->сТекущаяСтрока		=$сЗаписываемыйОбъект;
+			return		$сРасположЗаписываемыйОбъект;
 			}
 		}
-	private function _CreateFullTextIndex($strLocationSearch, $мОбрабатываемыйОбъект)
+	private function _CreateFullTextIndex($strLocationSearch)
 		{
-		$_сЗаписываемыйОбъектРасполож		=РасположениеСоздать::с($strLocationSearch.'/'.$мОбрабатываемыйОбъект['server_name'], 'unordered');
-		$this->_СоздатьСсылку($_сЗаписываемыйОбъектРасполож);
+		$сЗаписываемыйОбъектРасполож		=РасположениеСоздать::с($strLocationSearch.'/'.$this->мТекущаяСтрока['мОбъект']['server_name_short'], 'unordered');
+		$this->_СоздатьСсылку($сЗаписываемыйОбъектРасполож);
 		}
 	private function _СоздатьСсылку($_сЗаписываемыйОбъектРасполож)
 		{
-		$сОбрабатываемыйОбъект		=$this->сТекущаяСтрока;
+		$сОбрабатываемыйОбъект		=$this->мТекущаяСтрока['сПервичРасполож'];
 		$сЗаписываемыйОбъектРасполож	=$_сЗаписываемыйОбъектРасполож;
 
-		$ч1РасположениеКоличество	=РасположениеКоличество::ч1($сЗаписываемыйОбъектРасполож);
-		$сЗаписываемыйОбъект		=$сЗаписываемыйОбъектРасполож.'/'.$ч1РасположениеКоличество.'.plmr';
+		$ч0РасположениеКоличество	=РасположениеКоличество::ч0($сЗаписываемыйОбъектРасполож);
+		$сЗаписываемыйОбъект		=$сЗаписываемыйОбъектРасполож.'/'.$ч0РасположениеКоличество.'.plmr';
 
 		if(symlink($сОбрабатываемыйОбъект, $сЗаписываемыйОбъект))
 			{
-			if(file_put_contents($сЗаписываемыйОбъектРасполож.'/total.plmr', strMyJson(array('total'=>$ч1РасположениеКоличество)))===FALSE)
+			if(file_put_contents($сЗаписываемыйОбъектРасполож.'/total.plmr', strMyJson(array('int0Total'=>$ч0РасположениеКоличество)))===FALSE)
 				{
 				_Report('Error creating total!'.$сЗаписываемыйОбъектРасполож.'/total.plmr');
 				}
@@ -238,9 +252,9 @@ class Синтез
 		{
 		if(is_array($мПрисоед))
 			{
-			if(file_put_contents($strLocationJoinedTable.'/'.$this->сТекущаяСтрокаИД.'.plmr', strMyJson($мПрисоед))===FALSE)
+			if(file_put_contents($strLocationJoinedTable.'/'.$this->мТекущаяСтрока['мОбъект']['id'].'.plmr', strMyJson($мПрисоед))===FALSE)
 				{
-				_Report('Error creating belong_index!'.$strLocationJoinedTable.'/'.$this->сТекущаяСтрокаИД.'.plmr');
+				_Report('Error creating belong_index!'.$strLocationJoinedTable.'/'.$this->мТекущаяСтрока['мОбъект']['id'].'.plmr');
 				}
 			else
 				{
@@ -251,17 +265,17 @@ class Синтез
 		{
 		if(is_array($мПрисоед))
 			{
-			$сРасполож	=$strLocationJoinedTable.'/'.$this->сТекущаяСтрокаИД;
+			$сРасполож	=$strLocationJoinedTable.'/'.$this->мТекущаяСтрока['мОбъект']['id'];
 			if(is_dir($сРасполож.'/unordered'))
 				{
-				$ч1РасположениеКоличество	=РасположениеКоличество::ч1($сРасполож.'/unordered');
-				if(file_put_contents($сРасполож.'/unordered/'.$ч1РасположениеКоличество.'.plmr', strMyJson($мПрисоед))===FALSE)
+				$ч0РасположениеКоличество	=РасположениеКоличество::ч0($сРасполож.'/unordered');
+				if(file_put_contents($сРасполож.'/unordered/'.$ч0РасположениеКоличество.'.plmr', strMyJson($мПрисоед))===FALSE)
 					{
-					_Report('Error creating base! '.$сРасполож.'/unordered/'.$ч1РасположениеКоличество.'.plmr');
+					_Report('Error creating base! '.$сРасполож.'/unordered/'.$ч0РасположениеКоличество.'.plmr');
 					}
 				else
 					{
-					if(file_put_contents($сРасполож.'/unordered/total.plmr', strMyJson(array('total'=>$ч1РасположениеКоличество)))===FALSE)
+					if(file_put_contents($сРасполож.'/unordered/total.plmr', strMyJson(array('int0Total'=>$ч0РасположениеКоличество)))===FALSE)
 						{
 						_Report('Error creating total: '.$сРасполож.'/unordered/total.plmr');
 						}
@@ -274,7 +288,7 @@ class Синтез
 				}
 			}
 		}
-	private function  _CreateTagPack($_strBasePath, $arrGenre, $мСтанцияЧист, $bIzLinkStation)
+	private function  _CreateTagPack($_strBasePath, $arrGenre)
 		{
 		if(!is_dir($_strBasePath))
 			{
@@ -287,33 +301,29 @@ class Синтез
 				}
 			}
 			$strBasePath	=$_strBasePath;
-			/*
-			if($bIzLinkStation)
-				{
-				$s0=РасположениеСоздать::с($strBasePath.'/Stations',	'unordered');
-				$this->_СоздатьСсылку($this->сТекущаяСтрока, $s0);
-				}
-			*/
+
 		foreach($arrGenre as $strStyle)
 			{
-			$s1= $this->strCreateTag($strBasePath.'/Styles', $strStyle, $мСтанцияЧист['server_name']);
-			    $s2	 = $this->strCreateTag($s1.'/Codecs', $мСтанцияЧист['server_type'], $мСтанцияЧист['server_name']);
-			    $s2_1= $this->strCreateTag($s1.'/Bitrates', $мСтанцияЧист['bitrate'], $мСтанцияЧист['server_name']);
-				    $s3= $this->strCreateTag($s2.'/Bitrates', $мСтанцияЧист['bitrate'], $мСтанцияЧист['server_name']);
-			$b1= $this->strCreateTag($strBasePath.'/Bitrates', $мСтанцияЧист['bitrate'], $мСтанцияЧист['server_name']);
-			$c1= $this->strCreateTag($strBasePath.'/Codecs', $мСтанцияЧист['server_type'], $мСтанцияЧист['server_name']);
-			    $c2= $this->strCreateTag($c1.'/Bitrates', $мСтанцияЧист['bitrate'], $мСтанцияЧист['server_name']);
+			$s1= $this->strCreateTag($strBasePath.'/Styles', $strStyle);
+			    $s2	 = $this->strCreateTag($s1.'/ICQRType', $this->мТекущаяСтрока['мОбъект']['strICQR_Q']);
+			    //$s2	 = $this->strCreateTag($s1.'/Codecs', $мСтанцияЧист['server_type'], $мСтанцияЧист['server_name']);
+			    //$s2_1= $this->strCreateTag($s1.'/Bitrates', $мСтанцияЧист['bitrate'], $мСтанцияЧист['server_name']);
+				//    $s3= $this->strCreateTag($s2.'/Bitrates', $мСтанцияЧист['bitrate'], $мСтанцияЧист['server_name']);
+			$b1= $this->strCreateTag($strBasePath.'/ICQRType', $this->мТекущаяСтрока['мОбъект']['strICQR_Q']);
+			//$c1= $this->strCreateTag($strBasePath.'/Codecs', $мСтанцияЧист['server_type'], $мСтанцияЧист['sever_name']);
+			//    $c2= $this->strCreateTag($c1.'/Bitrates', $мСтанцияЧист['bitrate'], $мСтанцияЧист['server_name']);
 			}
 		}
-	private function  strCreateTag($_strPath, $_strTag, $_strStationName)
+	private function  strCreateTag($_strPath, $_strTag)
 		{
 		//echo $_strPath;
 		//echo "\n";
+		//$this->_CreateFullTextIndex($_strPath,	'search');
 		$s1=РасположениеСоздать::с($_strPath,	'search');
 		$s2=РасположениеСоздать::с($s1.'/'.$_strTag, 'unordered');
 		$this->_СоздатьСсылку($s2);
 		$s3 =РасположениеСоздать::с($s1.'/'.$_strTag, 'search');
-		$s4 =РасположениеСоздать::с($s3.'/'.$_strStationName, 'unordered');
+		$s4 =РасположениеСоздать::с($s3.'/'.$this->мТекущаяСтрока['мОбъект']['server_name_short'], 'unordered');
 		$this->_СоздатьСсылку($s4);
 		return $s2;
 		}
@@ -321,53 +331,67 @@ class Синтез
 	private function _CreateStructure($strTagLevel)
 		{
 		echo 'Создаём БД'."\n";
-		$strBasePath			=$this->сГлавнаяПапка.'/'.$this->сБазаДанных;
-		$strLocationStationsPrime	=РасположениеСоздать::с($strBasePath.'/Stations',	'prime');
-		$strLocationStationsSearch	=РасположениеСоздать::с($strBasePath.'/Stations',	'search');
-		$strLocationStationsUnordered	=РасположениеСоздать::с($strBasePath.'/Stations',	'unordered');
-		$strLocationStationsGenres	=РасположениеСоздать::с($strBasePath.'/Stations',	'genres');
-		$strLocationStationsICQR	=РасположениеСоздать::с($strBasePath.'/Stations',	'ICQR');
-		$strLocationStationsHistory	=РасположениеСоздать::с($strBasePath.'/Stations',	'history');
+		$strBasePath			=$this->сГлавнаяПапка.'/'.$this->сБазаДанных.'/'.$this->сТаблица;
+		$this->strLocationStationsPrime	=РасположениеСоздать::с($strBasePath,	'prime');
+		$strLocationStationsSearch	=РасположениеСоздать::с($strBasePath,	'search');
+		$strLocationStationsUnordered	=РасположениеСоздать::с($strBasePath,	'unordered');
+		$strLocationStationsGenres	=РасположениеСоздать::с($strBasePath,	'genres');
+		$strLocationStationsICQRType	=РасположениеСоздать::с($strBasePath,	'ICQRType');
+		$strLocationStationsHistory	=РасположениеСоздать::с($strBasePath,	'history');
 		$мОбрСтан			=array();
 		$ч0Х				=0;
 		foreach($this->мСписокОбъектов as $мСтанцияЧист)
 			{
 			$мСтильДляЧел			=array();
 			$мСтильДляРасполож		=array();
-			//$strFromEnc	=mb_detect_encoding($оСтанцияЧист['server_name']);
-			//$strToEnc	='UTF-8';
-			//$оСтанцияЧист['server_name']=mb_convert_encoding($оСтанцияЧист['server_name'],$strToEnc, $strFromEnc);
-			//$оСтанцияЧист['listen_url']	=сЗаменаСлэшУЕ($оСтанцияЧист['listen_url']);
-			//$оСтанцияЧист['server_name']	=сЗаменаСлэшУ($оСтанцияЧист['server_name']);
+			$strListenUrl				=trim(strSafeUsers($мСтанцияЧист['listen_url']));
+			$мСтанцияЧистS['id']			=сПреобразовать($strListenUrl, 	"вКоманду");
+			$мСтанцияЧистS['server_name']		=trim(strSafeUsers($мСтанцияЧист['server_name']));
+			$мСтанцияЧистS['server_name']		=(string)сПреобразовать($мСтанцияЧистS['server_name'], 			"вКоманду");
+			if(isset($мСтанцияЧистS['server_name'][253])&&$мСтанцияЧистS['server_name'][253]=='о')
+				{
+				$int0MaxNameLength		=252;
+				$мСтанцияЧистS['server_name_short']	=substr($мСтанцияЧистS['server_name'],0, $int0MaxNameLength);
+				}
+			if(isset($мСтанцияЧистS['server_name'][252])&&$мСтанцияЧистS['server_name'][252]=='о')
+				{
+				$int0MaxNameLength		=251;
+				$мСтанцияЧистS['server_name_short']	=substr($мСтанцияЧистS['server_name'],0, $int0MaxNameLength);
+				}
+			if(isset($мСтанцияЧистS['server_name'][251])&&$мСтанцияЧистS['server_name'][251]=='о')
+				{
+				$int0MaxNameLength		=250;
+				$мСтанцияЧистS['server_name_short']	=substr($мСтанцияЧистS['server_name'],0, $int0MaxNameLength);
+				}
+			if(isset($мСтанцияЧистS['server_name'][250])&&$мСтанцияЧистS['server_name'][250]=='о')
+				{
+				$int0MaxNameLength		=249;
+				$мСтанцияЧистS['server_name_short']	=substr($мСтанцияЧистS['server_name'],0, $int0MaxNameLength);
+				}
+			if(strlen($мСтанцияЧистS['server_name'])<=249)
+				{
+				$мСтанцияЧистS['server_name_short']	=$мСтанцияЧистS['server_name'];
+				}
 			$strGenre				=trim(strSafeUsers(str_replace(array( '(',')' ), '', $мСтанцияЧист['genre'])));
 			$мСтанцияЧистS['server_type']		=trim(strSafeUsers(strtolower(str_replace(array("/", " ", "audio", "application", "ogg:codecs=", "ogg: codecs="), '', $мСтанцияЧист['server_type']))));
 			$мСтанцияЧистS['server_type']		=сПреобразовать($мСтанцияЧистS['server_type'], 			"вКоманду");
-			$мСтанцияЧистS['server_name']		=trim(strSafeUsers($мСтанцияЧист['server_name']));
-			$мСтанцияЧистS['server_name']		=сПреобразовать($мСтанцияЧистS['server_name'], 			"вКоманду");
+
+
+
 			$мСтанцияЧистS['bitrate']		=(integer)trim(strSafeUsers($мСтанцияЧист['bitrate']));
-			//$мСтанцияЧистS['current_song']``		=trim(strSafeUsers($мСтанцияЧист['current_song']));
-			$strListenUrl				=trim(strSafeUsers($мСтанцияЧист['listen_url']));
-			$мСтанцияЧистS['id']			=сПреобразовать($strListenUrl, 					"вКоманду");
-			$мСтанцияЧистS['samplerate']		=trim(strSafeUsers($мСтанцияЧист['samplerate']));
-			$мСтанцияЧистS['channels']		=trim(strSafeUsers($мСтанцияЧист['channels']));
+
 									     unset($мСтанцияЧист);
 			$мСтанцияЧист				=$мСтанцияЧистS;
-			//				   unset($мСтанцияЧистS);
+							   unset($мСтанцияЧистS);
 
 			$мСтильДляЧел				=мСобратьФразы($strGenre, 			'НеТрог');
 			$мСтильДляРасполож			=мСобратьФразы($strGenre, 			'МалДиректор');
-			
-			$this->_CreatePrimaryIndex($strLocationStationsPrime, 		$мСтанцияЧист);
-			$this->_CreateFullTextIndex($strLocationStationsSearch,		$мСтанцияЧист);
-			$this->_AddJoinedTableBelongs($strLocationStationsGenres,	$мСтильДляЧел);
-			$this->_AddJoinedTableBelongs($strLocationStationsICQR,		array());
-			$this->_AddJoinedTableHasMany($strLocationStationsHistory,	array('strEvent'=>date('Y-m-d H:i:s')));
-			$this->_СоздатьСсылку($strLocationStationsUnordered);
+									 unset($strGenre);
 		
 
 			if(empty($мСтанцияЧист['id']))
 				{
-				_Report('empty: $оСтанция[listen_url]'.$мСтанцияЧист['server_name'].'||'.$мСтанцияЧист['id'].'||'.$strGenre);
+				_Report('empty: $мСтанцияЧист[listen_url]'.$мСтанцияЧист['server_name'].'||'.$мСтанцияЧист['id'].'||'.$strGenre);
 				$мОбрСтан[]	=
 					array(
 						'id'	=>$мСтанцияЧист['id'],
@@ -378,7 +402,7 @@ class Синтез
 				}
 			if($мСтанцияЧист['id']=="")
 				{
-				_Report('$оСтанция[listen_url]==""'.$мСтанцияЧист['server_name'].'||'.$моСтанцияЧист['id'].'||'.$strGenre);
+				_Report('$мСтанцияЧист[listen_url]==""'.$мСтанцияЧист['server_name'].'||'.$моСтанцияЧист['id'].'||'.$strGenre);
 				$мОбрСтан[]	=
 					array(
 						'id'	=>$мСтанцияЧист['id'],
@@ -389,7 +413,7 @@ class Синтез
 				}
 			if(strpos($мСтанцияЧист['server_type'], 'video')!==FALSE)
 				{
-				_Report('strpos($оСтанцияЧист[server_type], video)!==FALSE'.$мСтанцияЧист['server_name'].'||'.$мСтанцияЧист['id'].'||'.$strGenre);
+				_Report('strpos($мСтанцияЧистЧист[server_type], video)!==FALSE'.$мСтанцияЧист['server_name'].'||'.$мСтанцияЧист['id'].'||'.$strGenre);
 				$мОбрСтан[]	=
 					array(
 						'id'	=>$мСтанцияЧист['id'],
@@ -432,23 +456,49 @@ class Синтез
 					);
 				continue;
 				}
-			//if(фCreateListen_lnSock($оСтанцияЧист['listen_url'])!==TRUE)
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			foreach($this->arrAndroidCodec as $strAndroidCodec)							///
+				{												///
+				if($мСтанцияЧист['server_type']==$strAndroidCodec)						///
+					{											///
+					$мСтанцияЧист['strPlatform'][]		='Android';					///
+					}											///
+				}												///
+			foreach($this->arrAppleCodec as $strAppleCodec)								///
+				{												///
+				if($мСтанцияЧист['server_type']==$strAppleCodec)						///
+					{											///
+					$мСтанцияЧист['strPlatform'][]		='Apple';					///
+					}											///
+				}												///
+			foreach($this->arrICQRType[$мСтанцияЧист['server_type']] as $strICQRName=>$strInterval)			///
+				{												///
+				$arrInterval=explode('_', $strInterval);							///
+				if($arrInterval[0]<=$мСтанцияЧист['bitrate']&&$мСтанцияЧист['bitrate']<$arrInterval[1])		///
+					{											///
+					$мСтанцияЧист['strICQR_Q']=$strICQRName;						///
+					}											///
+				}												///
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+			//print_r($мСтанцияЧист);
+			//if(фCreateListen_lnSock($мСтанцияЧистЧист['listen_url'])!==TRUE)
 			//	{
-			//	_Report('фCreateListen_lnSock($оСтанцияЧист['listen_ur']l)===TRUE'.$оСтанцияЧист['server_name'].'||'.$оСтанцияЧист['listen_url'].'||'.$оСтанцияЧист['genre']);
+			//	_Report('фCreateListen_lnSock($мСтанцияЧистЧист['listen_ur']l)===TRUE'.$мСтанцияЧистЧист['server_name'].'||'.$мСтанцияЧистЧист['listen_url'].'||'.$мСтанцияЧистODЧист['genre']);
 			//	continue;
 			//	}
-			
-			$this->_CreateTagPack($strBasePath, $мСтильДляРасполож, $мСтанцияЧист, 1);
-			if(in_array($мСтанцияЧист['server_type'], $this->arrAndroidCodec)!==FALSE)
+			$this->мТекущаяСтрока['сПервичРасполож']	=$this->strCreatePrimaryIndex($мСтанцияЧист);
+			$this->мТекущаяСтрока['мОбъект']		=$мСтанцияЧист;
+			$this->_СоздатьСсылку($strLocationStationsUnordered);
+			$this->_CreateFullTextIndex($strLocationStationsSearch);
+			$this->_AddJoinedTableBelongs($strLocationStationsGenres,	$мСтильДляЧел);
+			//$this->_AddJoinedTableBelongs($strLocationStationsICQR,		array());
+			$this->_AddJoinedTableHasMany($strLocationStationsHistory,	array('strEvent'=>date('Y-m-d H:i:s')));
+			$this->_CreateTagPack($strBasePath, $мСтильДляРасполож);
+			foreach($мСтанцияЧист['strPlatform'] as $strPlatform)
 				{
-				//echo 'Android'."\n";
-				//$this->_CreateFullTextIndex($strLocationStationsSearch,		$мСтанцияЧист);
-				$this->_CreateTagPack($strBasePath.'/Android', $мСтильДляРасполож, $мСтанцияЧист, 1);
-				}
-			if(in_array($мСтанцияЧист['server_type'], $this->arrAppleCodec)!==FALSE)
-				{
-				//echo 'Apple'."\n";
-				$this->_CreateTagPack($strBasePath.'/Apple', $мСтильДляРасполож, $мСтанцияЧист, 1);
+				$this->_CreateFullTextIndex($strBasePath.'/'.$strPlatform.'/search');
+				$this->_CreateTagPack($strBasePath.'/'.$strPlatform, $мСтильДляРасполож);
 				}
 			$this->ч0ТекущаяСтрока++;
 			$ч0Х++;
@@ -460,116 +510,6 @@ class Синтез
 				);
 			}
 		}
-
-
-
-
-
-	/*private function _CreateName($оОбрабатываемыйОбъект, $strLocationSearch, $strServerName, $_strOrder='unordered')
-		{
-		$_сЗаписываемыйОбъектРасполож		=РасположениеСоздать::с($strLocationSearch.'/'.$strServerName, $_strOrder);
-		$this->_СоздатьЗапись($оОбрабатываемыйОбъект, $_сЗаписываемыйОбъектРасполож);
-		
-		}*/
-	/*private function _СоздатьЗапись($оОбрабатываемыйОбъект, $сЗаписываемыйОбъектРасполож)
-		{
-		$ч1РасположениеКоличество			=РасположениеКоличество::ч1($сЗаписываемыйОбъектРасполож);
-
-		$сЗаписываемыйОбъект		=$сЗаписываемыйОбъектРасполож.'/'.$ч1РасположениеКоличество.'.plmr';
-	//	$this->сТекущаяСтрока		=$сЗаписываемыйОбъект;
-		//$this->сЗаписываемыйОбъект	=$сЗаписываемыйОбъект;
-
-		if(file_put_contents($сЗаписываемыйОбъект, strMyJson($оОбрабатываемыйОбъект)))
-			{
-			file_put_contents($сЗаписываемыйОбъектРасполож.'/total.plmr', json_encode(array('total'=>$ч1РасположениеКоличество)));
-			}
-		else
-			{
-			_Report('Error creating link!'.$сЗаписываемыйОбъект);
-			}
-		//$this->мРасположКолВо[$сЗаписываемыйОбъектРасполож]++;
-		if(filesize($сЗаписываемыйОбъект)==0)
-			{
-			//print_r($оОбрабатываемыйОбъект->server_name[0]);
-			//echo json_encode($оОбрабатываемыйОбъект->server_name[0]);
-			print_r($this->оСтанцияЧист);
-			//print_r(json_encode($оОбрабатываемыйОбъект->server_name[0]));
-			//exit;
-			}
-		}*/
-/*	private function _ЗаписатьСтроку($_чНомер, $_сПутьКДанным,$_мДанные)
-		{
-		$сДанные		=json_encode($_мДанные);
-		$сПутьИИмяФайла		=$_сПутьКДанным.'/'.$_чНомер.'.plmr';
-		if(file_put_contents($сПутьИИмяФайла, $сДанные))
-			{
-			}
-		else
-			{
-			Report('Ошибка: не могу записать строку '.$сПутьИИмяФайла.'_'.$сДанные);
-			sleep(1);
-			$this->_ЗаписатьСтроку($_чНомер, $_сПутьКДанным,$_мДанные);
-			}
-		$this->_ЗаписатьИтог($_сТипХранения='search');
-		$this->сИмяТекущегОбъекта	=$сПутьИИмяФайла;
-		}
-	
-	private function _СоздатьСсылкуИмя($_сОбрабатываемыйОбъект, $_сЗаписываемыйОбъект)
-		{
-		if(symlink($_сОбрабатываемыйОбъект, $_сЗаписываемыйОбъект))
-			{
-			}
-		else
-			{
-			_Report('Error creating link!'.$_сОбрабатываемыйОбъект.'->'.$_сЗаписываемыйОбъект);
-			}
-		}*/
-	private function _ЗаписатьИтог($_сТипХранения='unordered')
-		{
-		$сПутьКДанным		=$this->сГлавнаяПапка.'/'.$this->сБазаДанных.'/'.$this->сТаблица.'/'.$_сТипХранения;
-		$сПутьИИмяФайла		=$сПутьКДанным.'/total.plmr';
-		$сДанные		=json_encode(array('total'=>$this->чТекущаяСтрока));
-		if(file_put_contents($сПутьИИмяФайла, $сДанные))
-			{
-			
-			}
-		else
-			{
-			_Report('Ошибка: не могу записать итог '.$сПутьИИмяФайла);
-			}
-		}
-	private function _createRecord($strTag ,$strOrderType)
-		{
-		
-		}
-
-	/*private function _СоздатьПапку($_оДанные)
-		{
-		$сПутьКДаннымЗапись		=$this->сГлавнаяПапка.'/'.$this->сБазаДанных.'/'.$this->сТаблица.'/Names';
-		$сЗаписываемыйОбъектРасполож	=РасположениеСоздать::с($сПутьКДаннымЗапись);
-
-
-		$сПапка				=сПреобразовать(mb_strtolower($_оДанные->server_name), 		"вКоманду");
-		$сЗаписываемыйОбъектРасполож	=РасположениеСоздать::с($сЗаписываемыйОбъектРасполож.'/'.$сПапка);
-		$ч1РасположениеКоличество	=РасположениеКоличество::ч1($сЗаписываемыйОбъектРасполож);
-		file_put_contents($сЗаписываемыйОбъектРасполож.'/'.$ч1РасположениеКоличество.'.plmr', json_encode($_оДанные));
-
-
-		$сПутьКДаннымЗапись		=$this->сГлавнаяПапка.'/'.$this->сБазаДанных.'/'.$this->сТаблица.'/Hash';
-		$сЗаписываемыйОбъектРасполож	=РасположениеСоздать::с($сПутьКДаннымЗапись);
-		//file_put_contents($сЗаписываемыйОбъектРасполож.'/Station.plmr', json_encode($_оДанные));
-		
-
-		$сПапка				=сПреобразовать($_оДанные->listen_url, 		"вКоманду");
-		$сЗаписываемыйОбъектРасполож	=РасположениеСоздать::с($сЗаписываемыйОбъектРасполож.'/'.$сПапка);
-		file_put_contents($сЗаписываемыйОбъектРасполож.'/'.'Server.plmr', json_encode($_оДанные));
-
-		//$ч1РасположениеКоличество	=РасположениеКоличество::ч1($сЗаписываемыйОбъектРасполож);
-		//file_put_contents($сЗаписываемыйОбъектРасполож.'/total.plmr', json_encode(array('total'=>$ч1РасположениеКоличество)));
-		}*/
-
-
-
 	public static function _Старт()
 		{
 		$оСинтез =new Синтез();
@@ -626,6 +566,38 @@ class Синтез
 		return $arrXML;
 		}
 	}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 class XMLTag
 	{
 	private $bTagIn		=false;
@@ -766,21 +738,5 @@ class XMLTag
 		return $objTag->arrTag;
 		}
 	}
-	function strMyJson($arr)
-		{
-		$str	='';
-		if(is_array($arr))
-			{
-			$str	='{';
-			foreach($arr as $strName=>$strValue)
-				{
-				$strName	=str_replace('"','',$strName);
-				$strValue	=str_replace('"','',$strValue);
-				$str	.='"'.$strName.'":"'.$strValue.'",';
-				}
-			$str	=substr($str,0,-1);
-			$str	.='}';
-			}
-		return $str;
-		}
+
 ?>
