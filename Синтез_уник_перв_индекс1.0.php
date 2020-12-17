@@ -45,7 +45,7 @@ $сРасположDestination	='/ОЗУ';
 $сРасположReality	='/ЛокалОблако';
 $сРасположObject	='/НаборЭлементов/Фраза/Фраза.php';
 require_once($сРасположОбъект.$сРасположEvent.$сРасположDestination.$сРасположReality.$сРасположObject);
-echo'Загруз:Фраза->загрузил модуль.'."\n";
+echo'Загруз:Фраза->загрузил модуль.'."\n";*/
 
 echo'Загруз:ЗагрузЭлемент.'."\n";
 $сРасположEvent		='/Чтение_Диск';
@@ -55,7 +55,7 @@ $сРасположObject	='/Элемент/ЗагрузитьЭлемент.php
 require_once($сРасположОбъект.$сРасположEvent.$сРасположDestination.$сРасположReality.$сРасположObject);
 echo'Загруз:ЗагрузЭлемент->загрузил модуль.'."\n";
 
-echo'Загруз:ЗагрузСписок.'."\n";
+/*echo'Загруз:ЗагрузСписок.'."\n";
 $сРасположEvent		='/Чтение_Диск';
 $сРасположDestination	='/ОЗУ';
 $сРасположReality	='/ЛокалОблако';
@@ -118,7 +118,7 @@ class Синтез
 				'mpeg'=>	
 					array(
 					'Low quality'	=>'0_192',
-					'HiFi beginner'	=>'192_320',
+					'HiFi beginner'	=>'192_323',
 				//	'HiFi lover'	=>false,
 				//	'HiFi Top'	=>false,
 				//	'2.1'		=>false,
@@ -130,7 +130,7 @@ class Синтез
 					'Low quality'	=>'0_64',
 					'HiFi beginner'	=>'64_192',
 					'HiFi lover'	=>'192_1024',
-					'HiFi Top'	=>'1024_2048',
+					'HiFi Top'	=>'1024_2056',
 				//	'2.1'		=>false,
 				//	'5.1'		=>false,
 				//	'7.1'		=>false,
@@ -150,7 +150,7 @@ class Синтез
 					'Low quality'	=>'0_160',
 					'HiFi beginner'	=>'160_512',
 					'HiFi lover'	=>'512_1024',
-					'HiFi Top'	=>'1024_2048',
+					'HiFi Top'	=>'1024_4096',
 				//	'2.1'		=>false,
 				//	'5.1'		=>false,
 				//	'7.1'		=>false,
@@ -160,7 +160,7 @@ class Синтез
 					'Low quality'	=>'0_160',
 					'HiFi beginner'	=>'160_512',
 					'HiFi lover'	=>'512_1024',
-					'HiFi Top'	=>'1024_2048',
+					'HiFi Top'	=>'1024_4096',
 				//	'2.1'		=>false,
 				//	'5.1'		=>false,
 				//	'7.1'		=>false,
@@ -170,7 +170,7 @@ class Синтез
 					'Low quality'	=>'0_160',
 					'HiFi beginner'	=>'160_512',
 					'HiFi lover'	=>'512_1024',
-					'HiFi Top'	=>'1024_2048',
+					'HiFi Top'	=>'1024_4096',
 				//	'2.1'		=>false,
 				//	'5.1'		=>false,
 				//	'7.1'		=>false,
@@ -248,24 +248,32 @@ class Синтез
 			_Report('Error creating link!'.$сОбрабатываемыйОбъект.'->'.$сЗаписываемыйОбъект);
 			}
 		}
-	private function _AddJoinedTableBelongs($strLocationJoinedTable,  $мПрисоед)
+	private function _AddJoinedTableBelongs($strLocationJoinedTable, $сНазвание,   $мПрисоед)
 		{
+		if(!is_dir($strLocationJoinedTable.'/'.$сНазвание))
+			{
+			mkdir($strLocationJoinedTable.'/'.$сНазвание);
+			}
 		if(is_array($мПрисоед))
 			{
-			if(file_put_contents($strLocationJoinedTable.'/'.$this->мТекущаяСтрока['мОбъект']['id'].'.plmr', strMyJson($мПрисоед))===FALSE)
+			if(file_put_contents($strLocationJoinedTable.'/'.$сНазвание.'/'.$this->мТекущаяСтрока['мОбъект']['id'].'.plmr', strMyJson($мПрисоед))===FALSE)
 				{
-				_Report('Error creating belong_index!'.$strLocationJoinedTable.'/'.$this->мТекущаяСтрока['мОбъект']['id'].'.plmr');
+				_Report('Error creating belong_index!'.$strLocationJoinedTable.'/'.$сНазвание.'/'.$this->мТекущаяСтрока['мОбъект']['id'].'.plmr');
 				}
 			else
 				{
 				}
 			}
 		}
-	private function _AddJoinedTableHasMany($strLocationJoinedTable,  $мПрисоед)
+	private function _AddJoinedTableHasMany($strLocationJoinedTable, $сНазвание,  $мПрисоед)
 		{
+		if(!is_dir($strLocationJoinedTable.'/'.$сНазвание))
+			{
+			mkdir($strLocationJoinedTable.'/'.$сНазвание);
+			}
 		if(is_array($мПрисоед))
 			{
-			$сРасполож	=$strLocationJoinedTable.'/'.$this->мТекущаяСтрока['мОбъект']['id'];
+			$сРасполож	=$strLocationJoinedTable.'/'.$сНазвание.'/'.$this->мТекущаяСтрока['мОбъект']['id'];
 			if(is_dir($сРасполож.'/unordered'))
 				{
 				$ч0РасположениеКоличество	=РасположениеКоличество::ч0($сРасполож.'/unordered');
@@ -284,7 +292,7 @@ class Синтез
 			else
 				{
 				РасположениеСоздать::с($сРасполож, 'unordered');
-				$this->_AddJoinedTableHasMany($strLocationJoinedTable,  $мПрисоед);
+				$this->_AddJoinedTableHasMany($strLocationJoinedTable, $сНазвание,  $мПрисоед);
 				}
 			}
 		}
@@ -304,7 +312,7 @@ class Синтез
 
 		foreach($arrGenre as $strStyle)
 			{
-			$s1= $this->strCreateTag($strBasePath.'/Styles', $strStyle);
+			$s1= $this->strCreateTag($strBasePath.'/Genres', $strStyle);
 			    $s2	 = $this->strCreateTag($s1.'/ICQRType', $this->мТекущаяСтрока['мОбъект']['strICQR_Q']);
 			    //$s2	 = $this->strCreateTag($s1.'/Codecs', $мСтанцияЧист['server_type'], $мСтанцияЧист['server_name']);
 			    //$s2_1= $this->strCreateTag($s1.'/Bitrates', $мСтанцияЧист['bitrate'], $мСтанцияЧист['server_name']);
@@ -335,9 +343,11 @@ class Синтез
 		$this->strLocationStationsPrime	=РасположениеСоздать::с($strBasePath,	'prime');
 		$strLocationStationsSearch	=РасположениеСоздать::с($strBasePath,	'search');
 		$strLocationStationsUnordered	=РасположениеСоздать::с($strBasePath,	'unordered');
-		$strLocationStationsGenres	=РасположениеСоздать::с($strBasePath,	'genres');
-		$strLocationStationsICQRType	=РасположениеСоздать::с($strBasePath,	'ICQRType');
-		$strLocationStationsHistory	=РасположениеСоздать::с($strBasePath,	'history');
+		$strLocationStationsBelongs	=РасположениеСоздать::с($strBasePath,	'belongs');
+		$strLocationStationsHasMany	=РасположениеСоздать::с($strBasePath,	'hasmany');
+		$strLocationStationsHistory	=РасположениеСоздать::с($this->сГлавнаяПапка.'/'.$this->сБазаДанных,	'History');
+		//$strLocationStationsGenres	=РасположениеСоздать::с($this->сГлавнаяПапка.'/'.$this->сБазаДанных,	'Genres');
+		//$strLocationStationsICQRType	=РасположениеСоздать::с($this->сГлавнаяПапка.'/'.$this->сБазаДанных,	'ICQRType');
 		$мОбрСтан			=array();
 		$ч0Х				=0;
 		foreach($this->мСписокОбъектов as $мСтанцияЧист)
@@ -386,7 +396,7 @@ class Синтез
 
 			$мСтильДляЧел				=мСобратьФразы($strGenre, 			'НеТрог');
 			$мСтильДляРасполож			=мСобратьФразы($strGenre, 			'МалДиректор');
-									 unset($strGenre);
+			//						 unset($strGenre);
 		
 
 			if(empty($мСтанцияЧист['id']))
@@ -462,14 +472,14 @@ class Синтез
 				{												///
 				if($мСтанцияЧист['server_type']==$strAndroidCodec)						///
 					{											///
-					$мСтанцияЧист['strPlatform'][]		='Android';					///
+					$мПлатформа[]		='Android';					///
 					}											///
 				}												///
 			foreach($this->arrAppleCodec as $strAppleCodec)								///
 				{												///
 				if($мСтанцияЧист['server_type']==$strAppleCodec)						///
 					{											///
-					$мСтанцияЧист['strPlatform'][]		='Apple';					///
+					$мПлатформа[]		='Apple';					///
 					}											///
 				}												///
 			foreach($this->arrICQRType[$мСтанцияЧист['server_type']] as $strICQRName=>$strInterval)			///
@@ -479,7 +489,15 @@ class Синтез
 					{											///
 					$мСтанцияЧист['strICQR_Q']=$strICQRName;						///
 					}											///
+				}
+			if(!isset($мСтанцияЧист['strICQR_Q']))
+				{
+				print_r($мСтанцияЧист);
 				}												///
+			if(empty($мСтанцияЧист['strICQR_Q']))
+				{
+				print_r($мСтанцияЧист);
+				}
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 			//print_r($мСтанцияЧист);
 			//if(фCreateListen_lnSock($мСтанцияЧистЧист['listen_url'])!==TRUE)
@@ -489,16 +507,28 @@ class Синтез
 			//	}
 			$this->мТекущаяСтрока['сПервичРасполож']	=$this->strCreatePrimaryIndex($мСтанцияЧист);
 			$this->мТекущаяСтрока['мОбъект']		=$мСтанцияЧист;
+			print_r($this->мТекущаяСтрока['мОбъект']);
 			$this->_СоздатьСсылку($strLocationStationsUnordered);
 			$this->_CreateFullTextIndex($strLocationStationsSearch);
-			$this->_AddJoinedTableBelongs($strLocationStationsGenres,	$мСтильДляЧел);
+			$this->_AddJoinedTableBelongs($strLocationStationsBelongs, 'Genres', $мСтильДляЧел);
 			//$this->_AddJoinedTableBelongs($strLocationStationsICQR,		array());
-			$this->_AddJoinedTableHasMany($strLocationStationsHistory,	array('strEvent'=>date('Y-m-d H:i:s')));
-			$this->_CreateTagPack($strBasePath, $мСтильДляРасполож);
-			foreach($мСтанцияЧист['strPlatform'] as $strPlatform)
+			$this->_AddJoinedTableHasMany($strLocationStationsHistory, 'History',	array('strEvent'=>date('Y-m-d H:i:s')));
+			$this->_CreateTagPack($this->сГлавнаяПапка.'/'.$this->сБазаДанных, $мСтильДляРасполож);
+			foreach($мПлатформа as $strPlatform)
 				{
-				$this->_CreateFullTextIndex($strBasePath.'/'.$strPlatform.'/search');
-				$this->_CreateTagPack($strBasePath.'/'.$strPlatform, $мСтильДляРасполож);
+				if(!is_dir($this->сГлавнаяПапка.'/'.$this->сБазаДанных.'/'.$strPlatform))
+					{
+					mkdir($this->сГлавнаяПапка.'/'.$this->сБазаДанных.'/'.$strPlatform);
+					}
+				if(!is_dir($this->сГлавнаяПапка.'/'.$this->сБазаДанных.'/'.$strPlatform.'/'.$this->сТаблица))
+					{
+					mkdir($this->сГлавнаяПапка.'/'.$this->сБазаДанных.'/'.$strPlatform.'/'.$this->сТаблица);
+					}
+				$strPlatSearch		=РасположениеСоздать::с($this->сГлавнаяПапка.'/'.$this->сБазаДанных.'/'.$strPlatform.'/'.$this->сТаблица,	'search');
+				$strPlatUnordered	=РасположениеСоздать::с($this->сГлавнаяПапка.'/'.$this->сБазаДанных.'/'.$strPlatform.'/'.$this->сТаблица,	'unordered');
+				$this->_СоздатьСсылку($strPlatUnordered);
+				$this->_CreateFullTextIndex($strPlatSearch);
+				$this->_CreateTagPack($this->сГлавнаяПапка.'/'.$this->сБазаДанных.'/'.$strPlatform, $мСтильДляРасполож);
 				}
 			$this->ч0ТекущаяСтрока++;
 			$ч0Х++;
@@ -508,6 +538,7 @@ class Синтез
 				'name'	=>$мСтанцияЧист['server_name'],
 				'genre'	=>$strGenre
 				);
+			unset($мПлатформа);
 			}
 		}
 	public static function _Старт()
