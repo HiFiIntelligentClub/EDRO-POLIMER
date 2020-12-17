@@ -235,7 +235,7 @@ class Синтез
 
 		if(symlink($сОбрабатываемыйОбъект, $сЗаписываемыйОбъект))
 			{
-			if(file_put_contents($сЗаписываемыйОбъектРасполож.'/total.plmr', strMyJson(array('int0Total'=>$ч0РасположениеКоличество)))===FALSE)
+			if(file_put_contents($сЗаписываемыйОбъектРасполож.'/total.plmr', strMyJson(array('int0Total'=>($ч0РасположениеКоличество+1))))===FALSE)
 				{
 				_Report('Error creating total!'.$сЗаписываемыйОбъектРасполож.'/total.plmr');
 				}
@@ -283,7 +283,7 @@ class Синтез
 					}
 				else
 					{
-					if(file_put_contents($сРасполож.'/unordered/total.plmr', strMyJson(array('int0Total'=>$ч0РасположениеКоличество)))===FALSE)
+					if(file_put_contents($сРасполож.'/unordered/total.plmr', strMyJson(array('int0Total'=>($ч0РасположениеКоличество+1))))===FALSE)
 						{
 						_Report('Error creating total: '.$сРасполож.'/unordered/total.plmr');
 						}
@@ -507,7 +507,7 @@ class Синтез
 			//	}
 			$this->мТекущаяСтрока['сПервичРасполож']	=$this->strCreatePrimaryIndex($мСтанцияЧист);
 			$this->мТекущаяСтрока['мОбъект']		=$мСтанцияЧист;
-			print_r($this->мТекущаяСтрока['мОбъект']);
+			//print_r($this->мТекущаяСтрока['мОбъект']);
 			$this->_СоздатьСсылку($strLocationStationsUnordered);
 			$this->_CreateFullTextIndex($strLocationStationsSearch);
 			$this->_AddJoinedTableBelongs($strLocationStationsBelongs, 'Genres', $мСтильДляЧел);
@@ -524,10 +524,10 @@ class Синтез
 					{
 					mkdir($this->сГлавнаяПапка.'/'.$this->сБазаДанных.'/'.$strPlatform.'/'.$this->сТаблица);
 					}
-				$strPlatSearch		=РасположениеСоздать::с($this->сГлавнаяПапка.'/'.$this->сБазаДанных.'/'.$strPlatform.'/'.$this->сТаблица,	'search');
-				$strPlatUnordered	=РасположениеСоздать::с($this->сГлавнаяПапка.'/'.$this->сБазаДанных.'/'.$strPlatform.'/'.$this->сТаблица,	'unordered');
-				$this->_СоздатьСсылку($strPlatUnordered);
-				$this->_CreateFullTextIndex($strPlatSearch);
+				$strPlatformSearch		=РасположениеСоздать::с($this->сГлавнаяПапка.'/'.$this->сБазаДанных.'/'.$strPlatform.'/'.$this->сТаблица,	'search');
+				$strPlatformUnordered	=РасположениеСоздать::с($this->сГлавнаяПапка.'/'.$this->сБазаДанных.'/'.$strPlatform.'/'.$this->сТаблица,	'unordered');
+				$this->_СоздатьСсылку($strPlatformUnordered);
+				$this->_CreateFullTextIndex($strPlatformSearch);
 				$this->_CreateTagPack($this->сГлавнаяПапка.'/'.$this->сБазаДанных.'/'.$strPlatform, $мСтильДляРасполож);
 				}
 			$this->ч0ТекущаяСтрока++;
