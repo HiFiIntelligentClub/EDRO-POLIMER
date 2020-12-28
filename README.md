@@ -27,7 +27,7 @@
 
 
 * Counts view of a record, table row or group of records.
-* Smart adaptation to reality (Platform, can react on Reality for example:Detects Android or iPhone, and shows different rows from table, adopted to Reality).
+* Smart adaptation to reality (Platform, can react on Reality for example:Detects Android or iPhone, and shows different object from table, adopted to Reality).
 
 # Методы
 _СоздатьРасположение('HiFiIntelligentClub');<br/>
