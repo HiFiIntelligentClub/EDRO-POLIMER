@@ -79,6 +79,8 @@ $сРасположObject	='/Элемент/РасположениеСоздат
 require_once($сРасположОбъект.$сРасположEvent.$сРасположDestination.$сРасположReality.$сРасположObject);
 echo'Загруз:РасположениеСоздать->загрузил модуль.'."\n";
 
+require_once('/home/EDRO/4.Objects/Read/Cloud/Disk/MyXML.php');
+
 Синтез::_Старт();
 class Синтез
 	{
@@ -108,7 +110,7 @@ class Синтез
 				'mp3'=>	
 					array(
 					'Low quality'	=>'0_192',
-					'HiFi beginner'	=>'192_320',
+					'HiFi beginner'	=>'192_323',
 				//	'HiFi lover'	=>false,
 				//	'HiFi Top'	=>false,
 				//	'2.1'		=>false,
@@ -127,8 +129,8 @@ class Синтез
 					),
 				'aac'=>	
 					array(
-					'Low quality'	=>'0_64',
-					'HiFi beginner'	=>'64_192',
+					'Low quality'	=>'0_96',
+					'HiFi beginner'	=>'96_192',
 					'HiFi lover'	=>'192_1024',
 					'HiFi Top'	=>'1024_2056',
 				//	'2.1'		=>false,
@@ -137,8 +139,8 @@ class Синтез
 					),
 				'aacp'=>	
 					array(
-					'Low quality'	=>'0_64',
-					'HiFi beginner'	=>'64_192',
+					'Low quality'	=>'0_96',
+					'HiFi beginner'	=>'96_192',
 					'HiFi lover'	=>'192_1024',
 					'HiFi Top'	=>'1024_2048',
 				//	'2.1'		=>false,
@@ -191,7 +193,7 @@ class Синтез
 	public function __construct()
 		{
 		echo 'Очистить БД'."\n";
-		$this->_ОчиститьБазуДанных();
+		//$this->_ОчиститьБазуДанных();
 		echo 'Создать БД'."\n";
 		$this->_СоздатьБазуДнных();
 		echo 'Обновить список станций'."\n";
@@ -208,16 +210,21 @@ class Синтез
 		$this->сТекущаяСтрокаИД			=$мОбрабатываемыйОбъект['id'];
 		$сРасположЗаписываемыйОбъект		=$this->strLocationStationsPrime.'/'.$мОбрабатываемыйОбъект['id'].'.plmr';
 		
-
-		if(file_put_contents($сРасположЗаписываемыйОбъект, strMyJson($мОбрабатываемыйОбъект))===FALSE)
+		if(is_file($сРасположЗаписываемыйОбъект)===TRUE)
 			{
-			_Report('Primary index write error:'.$сРасположЗаписываемыйОбъект);
-			echo 'errr';
-			exit;
 			}
 		else
 			{
-			return		$сРасположЗаписываемыйОбъект;
+			if(file_put_contents($сРасположЗаписываемыйОбъект, strMyJson($мОбрабатываемыйОбъект))===FALSE)
+				{
+				_Report('Primary index write error:'.$сРасположЗаписываемыйОбъект);
+				echo 'errr';
+				exit;
+				}
+			else
+				{
+				return		$сРасположЗаписываемыйОбъект;
+				}
 			}
 		}
 	private function _CreateFullTextIndex($strLocationSearch)
@@ -230,12 +237,12 @@ class Синтез
 		$сОбрабатываемыйОбъект		=$this->мТекущаяСтрока['сПервичРасполож'];
 		$сЗаписываемыйОбъектРасполож	=$_сЗаписываемыйОбъектРасполож;
 
-		$ч0РасположениеКоличество	=РасположениеКоличество::ч0($сЗаписываемыйОбъектРасполож);
-		$сЗаписываемыйОбъект		=$сЗаписываемыйОбъектРасполож.'/'.$ч0РасположениеКоличество.'.plmr';
+		$ч1РасположениеКоличество	=РасположениеКоличество::ч1($сЗаписываемыйОбъектРасполож);
+		$сЗаписываемыйОбъект		=$сЗаписываемыйОбъектРасполож.'/'.$ч1РасположениеКоличество.'.plmr';
 
 		if(symlink($сОбрабатываемыйОбъект, $сЗаписываемыйОбъект))
 			{
-			if(file_put_contents($сЗаписываемыйОбъектРасполож.'/total.plmr', strMyJson(array('int0Total'=>($ч0РасположениеКоличество+1))))===FALSE)
+			if(file_put_contents($сЗаписываемыйОбъектРасполож.'/total.plmr', strMyJson(array('int1Total'=>($ч1РасположениеКоличество+1))))===FALSE)
 				{
 				_Report('Error creating total!'.$сЗаписываемыйОбъектРасполож.'/total.plmr');
 				}
@@ -276,14 +283,14 @@ class Синтез
 			$сРасполож	=$strLocationJoinedTable.'/'.$сНазвание.'/'.$this->мТекущаяСтрока['мОбъект']['id'];
 			if(is_dir($сРасполож.'/unordered'))
 				{
-				$ч0РасположениеКоличество	=РасположениеКоличество::ч0($сРасполож.'/unordered');
-				if(file_put_contents($сРасполож.'/unordered/'.$ч0РасположениеКоличество.'.plmr', strMyJson($мПрисоед))===FALSE)
+				$ч1РасположениеКоличество	=РасположениеКоличество::ч1($сРасполож.'/unordered');
+				if(file_put_contents($сРасполож.'/unordered/'.$ч1РасположениеКоличество.'.plmr', strMyJson($мПрисоед))===FALSE)
 					{
-					_Report('Error creating base! '.$сРасполож.'/unordered/'.$ч0РасположениеКоличество.'.plmr');
+					_Report('Error creating base! '.$сРасполож.'/unordered/'.$ч1РасположениеКоличество.'.plmr');
 					}
 				else
 					{
-					if(file_put_contents($сРасполож.'/unordered/total.plmr', strMyJson(array('int0Total'=>($ч0РасположениеКоличество+1))))===FALSE)
+					if(file_put_contents($сРасполож.'/unordered/total.plmr', strMyJson(array('int1Total'=>($ч1РасположениеКоличество+1))))===FALSE)
 						{
 						_Report('Error creating total: '.$сРасполож.'/unordered/total.plmr');
 						}
@@ -345,7 +352,7 @@ class Синтез
 		$strLocationStationsUnordered	=РасположениеСоздать::с($strBasePath,	'unordered');
 		$strLocationStationsBelongs	=РасположениеСоздать::с($strBasePath,	'belongs');
 		$strLocationStationsHasMany	=РасположениеСоздать::с($strBasePath,	'hasmany');
-		$strLocationStationsHistory	=РасположениеСоздать::с($this->сГлавнаяПапка.'/'.$this->сБазаДанных,	'History');
+		$strLocationStationsHistory	=РасположениеСоздать::с($strBasePath,	'History');
 		//$strLocationStationsGenres	=РасположениеСоздать::с($this->сГлавнаяПапка.'/'.$this->сБазаДанных,	'Genres');
 		//$strLocationStationsICQRType	=РасположениеСоздать::с($this->сГлавнаяПапка.'/'.$this->сБазаДанных,	'ICQRType');
 		$мОбрСтан			=array();
@@ -355,7 +362,8 @@ class Синтез
 			$мСтильДляЧел			=array();
 			$мСтильДляРасполож		=array();
 			$strListenUrl				=trim(strSafeUsers($мСтанцияЧист['listen_url']));
-			$мСтанцияЧистS['id']			=сПреобразовать($strListenUrl, 	"вКоманду");
+			//$мСтанцияЧистS['id']			=сПреобразовать($strListenUrl, 	"вКоманду");
+			$мСтанцияЧистS['id']			=сКодировать($strListenUrl, 'к');
 			$мСтанцияЧистS['server_name']		=trim(strSafeUsers($мСтанцияЧист['server_name']));
 			$мСтанцияЧистS['server_name']		=(string)сПреобразовать($мСтанцияЧистS['server_name'], 			"вКоманду");
 			if(isset($мСтанцияЧистS['server_name'][253])&&$мСтанцияЧистS['server_name'][253]=='о')
@@ -382,7 +390,7 @@ class Синтез
 				{
 				$мСтанцияЧистS['server_name_short']	=$мСтанцияЧистS['server_name'];
 				}
-			$strGenre				=trim(strSafeUsers(str_replace(array( '(',')' ), '', $мСтанцияЧист['genre'])));
+			$strGenre				=trim(cФразыСтиль_ИсправитьНаписание(strSafeUsers(str_replace(array( '(',')' ), '', $мСтанцияЧист['genre']))));
 			$мСтанцияЧистS['server_type']		=trim(strSafeUsers(strtolower(str_replace(array("/", " ", "audio", "application", "ogg:codecs=", "ogg: codecs="), '', $мСтанцияЧист['server_type']))));
 			$мСтанцияЧистS['server_type']		=сПреобразовать($мСтанцияЧистS['server_type'], 			"вКоманду");
 
@@ -508,12 +516,13 @@ class Синтез
 			$this->мТекущаяСтрока['сПервичРасполож']	=$this->strCreatePrimaryIndex($мСтанцияЧист);
 			$this->мТекущаяСтрока['мОбъект']		=$мСтанцияЧист;
 			//print_r($this->мТекущаяСтрока['мОбъект']);
-			$this->_СоздатьСсылку($strLocationStationsUnordered);
-			$this->_CreateFullTextIndex($strLocationStationsSearch);
+			//$this->_СоздатьСсылку($strLocationStationsUnordered);
+			//$this->_CreateFullTextIndex($strLocationStationsSearch);
 			$this->_AddJoinedTableBelongs($strLocationStationsBelongs, 'Genres', $мСтильДляЧел);
+			$this->_AddJoinedTableBelongs($strLocationStationsBelongs, 'Genres_control', $мСтильДляРасполож);
 			//$this->_AddJoinedTableBelongs($strLocationStationsICQR,		array());
-			$this->_AddJoinedTableHasMany($strLocationStationsHistory, 'History',	array('strEvent'=>date('Y-m-d H:i:s')));
-			$this->_CreateTagPack($this->сГлавнаяПапка.'/'.$this->сБазаДанных, $мСтильДляРасполож);
+			$this->_AddJoinedTableHasMany($strLocationStationsHistory, 'History',	array('strEvent'=>'Updating', 'strEventDate'=>date('Y-m-d H:i:s')));
+			/*$this->_CreateTagPack($this->сГлавнаяПапка.'/'.$this->сБазаДанных, $мСтильДляРасполож);
 			foreach($мПлатформа as $strPlatform)
 				{
 				if(!is_dir($this->сГлавнаяПапка.'/'.$this->сБазаДанных.'/'.$strPlatform))
@@ -529,7 +538,7 @@ class Синтез
 				$this->_СоздатьСсылку($strPlatformUnordered);
 				$this->_CreateFullTextIndex($strPlatformSearch);
 				$this->_CreateTagPack($this->сГлавнаяПапка.'/'.$this->сБазаДанных.'/'.$strPlatform, $мСтильДляРасполож);
-				}
+				}*/
 			$this->ч0ТекущаяСтрока++;
 			$ч0Х++;
 			$мОбрСтан[]	=
@@ -591,183 +600,10 @@ class Синтез
 		//echo count($arrXML);
 		//echo "\n";
 		$strXML		=file_get_contents('/home/HiFiIntelligentClub.Ru/tmp/all.xml');
-		$arrXML		=XMLTag::arr($strXML, 'entry');
+		$arrXML		=MyXML::arr($strXML, 'entry');
 		echo count($arrXML);
 		echo "\n";
 		return $arrXML;
 		}
 	}
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-class XMLTag
-	{
-	private $bTagIn		=false;
-	private $int0TagOpen	=0;
-	private $int0TagClose	=0;
-	private	$strInTag	='';
-	private	$strTagOpen	='';
-	public $arrTag		=array();
-	public function __construct($strXML, $strTagOpen)
-		{
-
-		$strXML			=(string)$strXML;
-		$arrOpen['str']		=(string)'<'.$strTagOpen.'>';
-		$arrOpen['len']		=strlen($arrOpen['str']);
-		$arrClose['str']	=(string)'</'.$strTagOpen.'>';
-		$arrClose['len']	=strlen($arrClose['str']);
-		$strIn			='';
-		$int1Length=strlen($strXML);
-		$bTagIn		=false;
-		$bTagOut	=false;
-		$intTag		=0;
-		$arrTag		=array();
-		for($int0I=0;$int0I<$int1Length;$int0I++)
-			{
-			//echo $intI;
-			if($strXML[$int0I]==$arrOpen['str'][$this->int0TagOpen])
-				{
-				$this->int0TagOpen++;
-				}
-			else
-				{
-				$this->int0TagOpen=0;
-				}
-			if($strXML[$int0I]==$arrClose['str'][$this->int0TagClose])
-				{
-				$this->int0TagClose++;
-				}
-			else
-				{
-				$this->int0TagClose=0;
-				}
-			if($this->int0TagOpen==$arrOpen['len'])
-				{
-				$this->int0TagOpen	=0;
-				$bTagIn			=true;
-				$bTagOut		=false;
-				}
-			if($this->int0TagClose==$arrClose['len'])
-				{
-				$strTagString					=substr($strIn,1,(-$arrClose['len']+1));
-				if($strTagOpen=='entry')
-					{
-					}
-				else
-					{
-					$arrTag[$strTagOpen]['str']			=$strTagString;
-					}
-				//$arrTag[$strTagOpen]['str']			=substr($strIn,1,(-$arrClose['len']+1));
-				$arrTags					=$this->arrTagName($strTagString);
-				if(!empty($arrTags))
-					{
-					foreach($arrTags as $strTag)
-						{
-						$arrTag[$strTagOpen][$strTag]	=XMLTag::arr($strTagString, $strTag)[0]['str'];
-						}
-					}
-				//$arrTag[$strTagOpen]['server_name']		=Tag::arr($arrTag[$strTagOpen]['str'], 'server_name');
-				//$arrTag[$strTagOpen]['server_type']		=Tag::arr($arrTag[$strTagOpen]['str'], 'server_type');
-				//$arrTag[$strTagOpen][$intTag]['bitrate']	=Tag::arr($arrTag[$strTagOpen][$intTag]['str'], 'bitrate');
-				//$arrTag[$strTagOpen][$intTag]['samplerate']	=Tag::arr($arrTag[$strTagOpen][$intTag]['str'], 'samplerate');
-				//$arrTag[$strTagOpen][$intTag]['channels']	=Tag::arr($arrTag[$strTagOpen][$intTag]['str'], 'channels');
-				//$arrTag[$strTagOpen][$intTag]['listen_url']	=Tag::arr($arrTag[$strTagOpen][$intTag]['str'], 'listen_url');
-				//$arrTag[$strTagOpen][$intTag]['current_song']	=Tag::arr($arrTag[$strTagOpen][$intTag]['str'], 'current_song');
-				//$arrTag[$strTagOpen][$intTag]['genre']		=Tag::arr($arrTag[$strTagOpen][$intTag]['str'], 'genre');
-				$this->arrTag[]					=$arrTag[$strTagOpen];
-				$intTag++;
-				$strIn			='';
-				$this->int0TagClose	=0;
-				$bTagIn			=false;
-				$bTagOut		=true;
-				}
-			if($bTagIn)
-				{
-				$strIn	.=$strXML[$int0I];
-				}
-			else
-				{
-				}
-			//echo $strIn;
-			}
-		}
-	private function arrTagName($strXML)
-		{
-		$arr			=array();
-		$strArrType		='';
-		$int0Arr		=0;
-		$int0ArrLength		=0;
-		$strArr			='';
-		$strXML			=(string)$strXML;
-		$int1Length		=strlen($strXML);
-		$bTagIn			=false;
-		$bTagOut		=false;
-		for($int0I=0;$int0I<$int1Length;$int0I++)
-			{
-			if($strXML[$int0I]=='<')
-				{
-				$bTagIn		=true;
-				}
-			if(($strXML[$int0I]=='>'||$strXML[$int0I]==' '||$strXML[$int0I]=="\n")&&$bTagIn)
-				{
-				if($strArr[1]=='/')
-					{
-					}
-				else
-					{
-					$arr[$int0Arr]	=substr($strArr,1,$int0ArrLength);
-					}
-				$strArr		='';
-				$int0ArrLength	=0;
-				$int0Arr++;
-				$bTagIn		=false;
-				}
-			if($bTagIn)
-				{
-				//if($strXML[$int0I]=='/')
-				//	{
-				//	$strArrType	='Open';
-				//	}
-				$strArr		.=$strXML[$int0I];
-				$int0ArrLength++;
-				}
-			}
-		return 		$arr;
-		}
-	public static function arr($strXML, $strTagOpen)
-		{
-		$objTag	= new XMLTag($strXML, $strTagOpen);
-		return $objTag->arrTag;
-		}
-	}
-
 ?>
