@@ -348,8 +348,8 @@ class Синтез
 		echo 'Создаём БД'."\n";
 		$strBasePath			=$this->сГлавнаяПапка.'/'.$this->сБазаДанных.'/'.$this->сТаблица;
 		$this->strLocationStationsPrime	=РасположениеСоздать::с($strBasePath,	'prime');
-		$strLocationStationsSearch	=РасположениеСоздать::с($strBasePath,	'search');
-		$strLocationStationsUnordered	=РасположениеСоздать::с($strBasePath,	'unordered');
+		//$strLocationStationsSearch	=РасположениеСоздать::с($strBasePath,	'search');
+		//$strLocationStationsUnordered	=РасположениеСоздать::с($strBasePath,	'unordered');
 		$strLocationStationsBelongs	=РасположениеСоздать::с($strBasePath,	'belongs');
 		$strLocationStationsHasMany	=РасположениеСоздать::с($strBasePath,	'hasmany');
 		$strLocationStationsHistory	=РасположениеСоздать::с($strBasePath,	'History');
