@@ -50,11 +50,13 @@ function strMakeDir($_с)
 	{
 	if(!is_dir($_с))
 		{
-		mkdir($_с);
+		if(mkdir($_с)===FALSE)
+			{
+			_Report('Не могу создать папку: '.$_с);
+			}
 		}
 	else
 		{
-		_Report('Не могу создать папку: '.$_с);
 		}
 	return $_с;
 	}
