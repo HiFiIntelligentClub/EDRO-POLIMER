@@ -165,7 +165,28 @@ foreach($arrObjects as $strObject)
 			{
 			if(!empty($оГлавн->server_name))
 				{
-				$оГлавн->server_name_short	=$оГлавн->server_name;
+				if(strpos($оГлавн->server_name,254,254)=='о')
+					{
+					$оГлавн->server_name_short	=substr($оГлавн->server_name,0,(254-3));
+					}
+				else
+					{
+					if(strpos($оГлавн->server_name,253,253)=='о')
+						{
+						$оГлавн->server_name_short	=substr($оГлавн->server_name,0,(253-3));
+						}
+					else
+						{
+						if(strpos($оГлавн->server_name,252,252)=='о')
+							{
+							$оГлавн->server_name_short	=substr($оГлавн->server_name,0,(252-3));
+							}
+						else
+							{
+							$оГлавн->server_name_short	=substr($оГлавн->server_name,0,(254));
+							}
+						}
+					}
 				}
 			else
 				{
