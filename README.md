@@ -4,10 +4,7 @@
 >?Е->Д:<br/>
 >?Р->О<br/>
 <br/>
-## Example of object ЕДРО:<br/>
-?Е=load table record.(if(load table record))<br/>
-:Д=Write Reality to access log, <br/>
-<br/>
+
 ## Пример объекта ЕДРО:<br/>
 ?Е = ЕСЛИ: Действие над объектом, например Чтение;<br/>
 :Д = ДЕЙСТВИЕ: Создать запись в журнал просмотра объектов;<br/>
