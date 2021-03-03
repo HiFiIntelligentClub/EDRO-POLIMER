@@ -71,8 +71,8 @@ else
 	$str .='<market class="TC1 BC1 fixed V4 HR0 block layer_2" style="font-size:small;height:20px;line-height:19px;">';
 	if(strtolower($objEDRO->arrEvent['arrReality']['strGenre'])=="trance"&&$objEDRO->arrEvent['arrReality']['strName']=='')
 		{
-		$str .='<ifRU>Воодушевлён Ферри Корстеном</ifRU>';
-		$str .='<ifEN>Inspired by Ferry Corsten</ifEN>';
+		$str .='<ifRU>Не в первый раз воодушевлён Ферри Корстеном</ifRU>';
+		$str .='<ifEN>Inspired by Ferry Corsten again</ifEN>';
 		}
 	    else
 		{
