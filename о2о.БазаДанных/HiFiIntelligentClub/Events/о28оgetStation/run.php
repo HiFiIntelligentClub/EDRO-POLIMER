@@ -1,86 +1,31 @@
 <?php
-                     /*_____
-© Andrey Chekmaryov 2020
-
-Email:    assminog@gmail.com
-Email:    tubmulur@yandex.ru
-Phone:    +7(911)787-44-57
-Whatsapp: +7(911)787-44-57
-Telegram: https://t.me/HficSamin
-VK:       https://vk.com/Hfic.Samin
-VK:       https://vk.com/HiFiIntelligentClub
-Facebook: https://facebook.com/Hfic.Samin
-Facebook: https://facebook.com/HiFiIntelligentClub
-Site[Ru] Public browsing international:  http://HiFiIntelligentClub.Ru
-Site[En] Public browsing international:  http://HiFiIntelligentClub.COM
-Site[En] Private browsing international: http://ryklzxobxv4s32omimbu7d7t3cdw6dplvsz36zsqqu7ad2foo5m3tmad.onion
-|E    |D     |R      |O      |
-|Event|Design|Reality|Objects|
- ////// 2020                   /////  / 
-//        /\                  // /   
-//      <  **>               /// /  
- //////   jl                ///// /    
-./././././././*/
-$objKIIM 	=array();
-$str		='';
-$str.=DynaScreen::strStart($objEDRO, StationSearchBlock::strHTML($objKIIM, $objEDRO->arrEvent['arrReality'], $objEDRO->arrReality));
-if($objEDRO->arrEvent['bIzDynamic'])
+$strDec			=сКодировать($objEDRO->arrEvent['arrReality']['strPlayingStationId'], 'д');
+$arrReality		=$objEDRO->arrEvent['arrReality'];
+if($arrReality['int1PlayingStationNum']>0)
 	{
+	$int0Plus=1;
 	}
 else
 	{
-	if($objEDRO->arrReality['bIzDesktop'])
-		{
-		$str	.=Overlay::strHTML($objEDRO);
-		}
+	$int0Plus=0;
 	}
-	$str .='
-	<ICQR_SEARCH
-		class	="fix brick V96 layer_3 BC1 L2"
-		style	="width:100vw;"
-		>';
-		$str .='
-		<title 
-			class="brick left L1"
-			>ICQR:
-		</title>
-		<sensor_block
-			class="brick left"
-			>'.ICQRType::strHTML($objKIIM, '', $objEDRO->arrEvent['arrReality'], $objEDRO).'
-		</sensor_block>';
-	$str .='
-	</ICQR_SEARCH>';
-	$str .=StationList::strHTML($objKIIM, $objEDRO);
-	
-	$str .='<myName
-			class="
-				fixed V97 block layer_5 BC2 TC2
-				"
-			style="left:40%"
-			>';
-			$str .=Tag::strHTML($objKIIM, $objEDRO->arrEvent['arrReality']['strName'], $objEDRO->arrEvent['arrReality'], 'strName', 11);
-	$str .='</myName>';
-	$str .='<myStyle
-			class="
-				fixed V97 HL0 block layer_5 BC2 TC2
-				"
-			>';
-		$str .=Tag::strHTML($objKIIM, $objEDRO->arrEvent['arrReality']['strGenre'], $objEDRO->arrEvent['arrReality'], 'strGenre', 11);
-	$str .='</myStyle>';
-	//print_r($objEDRO->arrEvent);
-	$str .='<market class="TC1 BC1 fixed V4 HR0 block layer_2" style="font-size:small;height:20px;line-height:19px;">';
-	if(strtolower($objEDRO->arrEvent['arrReality']['strGenre'])=="trance"&&$objEDRO->arrEvent['arrReality']['strName']=='')
-		{
-		$str .='<ifRU>Воодушевлён Ферри Корстеном</ifRU>';
-		$str .='<ifEN>Inspired by Ferry Corsten</ifEN>';
-		}
-	    else
-		{
-		//echo '<ifRU><marquee scrollamount="1" style="color:red;">ХайФайИнтеллиджентКлаб поздравляет Россиян с Днём Конституции!</marquee></ifRU>';
-		//echo '<ifEN><marquee scrollamount="1" style="color:red;">HiFi Intelligent Club congratulates the Russians on Constitution Day</marquee></ifEN>';
-		}
-	$str .='</market>';
-
-	$str .=HiFiNavigation::strHTML($objKIIM, $objEDRO->arrObjects['мРасположение'], $objEDRO->arrEvent['arrReality'], $objEDRO);
-$str .=DynaScreen::strEnd($objEDRO->arrEvent['bIzDynamic']);
+print_r($objEDRO);
+$str	=str_replace(array("\n","\t"),"", $strDec.'
+?strHICListener=Hfic.Samin
+&strUserEvent=StartPlayYourStation&strICQR_recommendations_to_improove_quality_raiting=coming_soon
+&strHICRequest=Are you ON-AIR now_coming_soon&HiFiIntelligentClub_event_date_and_time='.date(DATE_RFC822).'
+&listener_date_and_time='.$arrReality['strListenerDate'].'
+&listener_language='.strGetDomainLang().'
+&listener_find_you_in_this_style='.$arrReality['strGenre'].'
+&listener_find_you_by_this_name='.$arrReality['strName'].'
+&listener_find_you_in_this_HiFiType='.$arrReality['strHiFiType'].'
+&listener_find_you_at_this_page='.$arrReality['int0Page'].'
+&listener_setups_to_display_this_count_of_stations_at_one_page='.$arrReality['int1OnPage'].'
+&your_station_number_in_current_listener_list='.$arrReality['int1PlayingStationNum'].'/'.($objEDRO->arrObjects['ч0РасположениеTotal']+$int0Plus).'
+&YourICQR_RAITING=x/16
+&your_station_ID_at_HIC='.$arrReality['strPlayingStationId'].'
+&listener_reality=coming_soon
+&msg=v1.999 Sorry for annoying with connecting/disconnecting. Testing overheat. Have a good day. FK Hfic.Samin');
+echo $str;
+//$objEDRO->arrEvent['bIzDynamic']	=true;
 ?>
