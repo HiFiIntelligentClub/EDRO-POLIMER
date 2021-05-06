@@ -41,7 +41,14 @@ _ПодключитьКОбъекту_СвязанныйОбъект();<br/>
 _ПодключитьКОбъекту_СвязанныйСписок();<br/>
 <br/><br/>
 _СоздатьРасположение('HiFiIntelligentClub')->_СоздатьСписок('Stations')->_СоздатьПервичныйКаталог()->_ДобавитьПолнотекстПоиск_ДляСвойства()->_ПодключитьКОбъекту_СвязанныйОбъект()->_ПодключитьКОбъекту_СвязанныйСписок();<br/>
-© Andrey Chekmaryov tubmulur@yandex.ru 2020<br/>
+
+### © Андрей Чекмарёв assminog@gmail.com 2021
+### © Andrej Tjekmarjov tubmulur@yandex.ru 2021
+### © Tj Morjov from polar circle vk.com/TjMorjov  2021 (Used very rare)
+### © Hfic.Samin vk.com/Hfic.Samin 2021
+### © Andrey Chekmaryov facebook.com/Hfic.Samin 2021
+### © Andrey Chekmarev assminog@list.ru 2021
+
 
 
 
