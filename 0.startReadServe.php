@@ -22,9 +22,9 @@ set_time_limit(0);
 //require'/home/EDRO.SetOfTools/2.Ресурсы/1.Functions/02.Секундомер.php';
 //require'/home/EDRO.SetOfTools/2.Ресурсы/1.Functions/10.StringFunctions.php';
 
-Read::VoId();
+Read_Sock::VoId();
 
-class Read
+class Read_Sock
 	{
 	private $E	= array(
 				'strListenerBlock'	=> '',
@@ -46,12 +46,12 @@ class Read
 							'сТекущаяОперация'	=> '',
 							'мЖурнал'		=> 
 								array(
-								$оОшибка->ф			= FALSE,
-								$оОшибка->сТекущаяОперация	= '',
-								$оОшибка->strError		= '',
-								$оОшибка->strError		= '',
-								$оОшибка->strErrorNo		= 0,
-								$оОшибка->strDate		= '0000-00-00',
+							//	$оОшибка->ф			= FALSE,
+							//	$оОшибка->сТекущаяОперация	= '',
+							//	$оОшибка->strError		= '',
+							//	$оОшибка->strError		= '',
+							//	$оОшибка->strErrorNo		= 0,
+							//	$оОшибка->strDate		= '0000-00-00',
 								),
 							),
 				'ч1Слушатель'		=> 0,
@@ -64,12 +64,13 @@ class Read
 				'мЗаголовки'		=> array(),
 			);
 	public $O	= array(
+			
 			);
 
 	public function __construct()
 		{
 		$оСекундомер 				= new Секундомер(__CLASS__, __FUNCTION__);
-		
+		$this->_VoidCopyrights();
 		$this->_СтартЖурнала();
 		//$this->_Буфферизация();
 		$this->_memoryPrepare();
@@ -85,6 +86,15 @@ class Read
 			//exit();
 			}
 		$this->O['мСекундомер'][] 		= $оСекундомер->_Стоп();
+		}
+	private function _VoidCopyrights()
+		{
+		echo '-----------------------------------------------------------'."\n";
+		echo '© A.A.CheckMaRev assminog@gmail.com tubmulur@yandex.ru 2021'."\n";
+		echo 'EDRO:POLIMER superserver'."\n";
+		echo '-----------------------------------------------------------'."\n";
+		echo "\n";
+		echo "\n";
 		}
 	private function _memoryPrepare()
 		{
@@ -210,7 +220,7 @@ class Read
 		{
 		while(TRUE)
 			{
-			$оRead = new Read();
+			$оRead = new Read_Sock();
 			}
 			//$оRead = Read::VoId();
 		}
